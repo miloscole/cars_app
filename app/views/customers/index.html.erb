@@ -1,4 +1,5 @@
 <div class="container">
+    <%= render 'shared/flash' %>
     <h3>Customers</h3>
     <%= content_tag :a, "Add New", href: new_customer_path, role: "button" %>
     <table>
@@ -9,7 +10,7 @@
                 <th>Notes</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th colspan="3">Actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
                     <td><%= customer.notes %></td>
                     <td><%= customer.email %></td>
                     <td><%= customer.phone %></td>
+                    <td><%= render "shared/table-dd", id: customer.id %></td>
                 </tr>
             <% end %>
         </tbody>
