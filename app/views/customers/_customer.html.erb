@@ -1,23 +1,15 @@
-<div id="<%= dom_id customer %>" class='container'>
-   <h3>Customer  <%= customer.id %></h3>
-  <div>
-    <strong class='font-size-medium'>First Name:</strong>
-    <%= customer.first_name %>
-  </div>
-  <div>
-    <strong class='font-size-medium'>Last Name:</strong>
-    <%= customer.last_name %>
-  </div>
-  <div>
-    <strong class='font-size-medium'>Email:</strong>
-    <%= customer.email %>
-  </div>
-  <div>
-    <strong class='font-size-medium'>Phone:</strong>
-    <%= customer.phone %>
-  </div>
-  <div>
-    <strong class='font-size-medium'>Notes:</strong>
-    <%= customer.notes %>
-  </div>
+<div class="container">
+<article id="<%= dom_id customer %>">
+  <header>
+    <h3><%= customer.full_name %></h3>
+  </header>
+
+    <% visible_attributes(customer).each do |attribute| %>
+      <div>
+        <strong class='font-size-medium'><%= attribute.titleize %>:</strong>
+        <%= customer[attribute] %>
+      </div>
+    <% end %>
+<footer>Links</footer>
+</article>
 </div>

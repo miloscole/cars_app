@@ -1,8 +1,9 @@
 class CustomersController < ApplicationController
   include NoticeHelper
+  include CustomersHelper
 
   def index
-    @customers = Customer.all
+    @customers = (Customer.all).to_a
   end
 
   def new
