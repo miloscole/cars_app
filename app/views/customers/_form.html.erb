@@ -1,25 +1,14 @@
 <%= form_for customer, data: { turbo: false } do |f| %>
   <div>
-    <div>
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name, placeholder: "first name"%>
+    <% visible_attributes(customer).keys.each do |key| %>
+      <div class= "minimal-padding">
+        <%= f.label key %>
+        <%= render_text_field_or_area(f, key) %>
+        <%= error_message_for(customer, key) %>
+      </div>
+    <% end %>
+    <div class= "minimal-padding">
+     <%= f.submit disable_with: "Submiting..."%>
     </div>
-    <div>
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name, placeholder: "last name"%>
-    </div>
-    <div>
-      <%= f.label :email %>
-      <%= f.text_field :email, placeholder: "email"%>
-    </div>
-    <div>
-      <%= f.label :phone %>
-      <%= f.text_field :phone, placeholder: "phone"%>
-    </div>
-    <div>
-      <%= f.label :notes %>
-      <%= f.text_area :notes, rows: 4, placeholder: "notes"%>
-    </div>
-    <%= f.submit disable_with: "Submiting..."%>
   </div>
 <% end %>

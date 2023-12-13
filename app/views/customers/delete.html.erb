@@ -1,5 +1,6 @@
 <div class='container'>
   <h2>Delete Customer</h2>
+  <%= page_btn_links @customer %>
   <%= form_for @customer, method: 'delete',  data: { turbo: false } do |f| %>
     <div>
       <p>Are you sure you want permanetly delete this customer</p>

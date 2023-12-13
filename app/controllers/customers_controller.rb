@@ -25,7 +25,9 @@ class CustomersController < ApplicationController
   end
 
   def update
+    puts "Params received: #{params.inspect}"
     @customer = Customer.find(params[:id])
+    puts "Customer Params: #{customer_params.inspect}"
     if @customer.update(customer_params)
       redirect_to customers_path, notice: updated_notice(@customer)
     else
@@ -50,6 +52,6 @@ class CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :notes, :email, :phone)
+    params.require(:customer).permit(:first_name, :last_name, :email, :phone, :notes)
   end
 end

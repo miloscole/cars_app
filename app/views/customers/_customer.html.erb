@@ -4,12 +4,12 @@
     <h3><%= customer.full_name %></h3>
   </header>
 
-    <% visible_attributes(customer).each do |attribute| %>
+    <% visible_attributes(customer).keys.each do |key| %>
       <div>
-        <strong class='font-size-medium'><%= attribute.titleize %>:</strong>
-        <%= customer[attribute] %>
+        <strong class='font-size-medium'><%= key.titleize %>:</strong>
+        <%= customer[key] %>
       </div>
     <% end %>
-<footer>Links</footer>
+<footer><%= page_btn_links customer %></footer>
 </article>
 </div>
