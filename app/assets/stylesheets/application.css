@@ -14,10 +14,22 @@
  *= require_self
  */
 
- html {
+html {
     font-size: 16px;
-  }
+}
 
-  .font-size-medium {
+.font-size-medium {
     font-size: 1.25rem;
-  }
+}
+
+.error-color {
+    color: #c62828;
+}
+
+.margin-reset {
+    margin: 0 !important;
+}
+
+.minimal-padding {
+    padding: .8rem;
+}

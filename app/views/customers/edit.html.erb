@@ -1,4 +1,9 @@
 <div class="container">
+  <span  style="display: flex; justify-content: space-between;">
     <h3>Edit Customer</h3>
-    <%= render 'customers/form', customer: @customer %>
+    <span>
+      <%= page_btn_links @customer %>
+    </span>
+  </span>
+  <%= render 'customers/form', customer: @customer %>
 </div>
