@@ -1,11 +1,17 @@
-<div class='container'>
-  <h2>Delete Customer</h2>
-  <%= page_btn_links @customer %>
-  <%= form_for @customer, method: 'delete',  data: { turbo: false } do |f| %>
-    <div>
-      <p>Are you sure you want permanetly delete this customer</p>
-      <p><%= @customer.first_name %></p>
-      <%= f.submit 'Delete customer', disable_with: "Submiting..."%>
-    </div>
-  <% end %>
+<div class="flex-center">
+  <article>
+    <header class="flex-between">
+      <h2 class= "margin-reset">Confirm your action!</h2>
+      <span>
+        <%= page_btn_links @customer %>
+      </span>
+    </header>
+    <%= form_for @customer, method: 'delete' do |f| %>
+      <div>
+        <h4>Are you sure you want permanetly delete customer <%= @customer.full_name %>?</h4>
+        <br>
+        <%= f.submit 'Delete customer', disable_with: "Submiting...", class: "outline"%>
+      </div>
+    <% end %>
+  </article>
 </div>

@@ -3,7 +3,7 @@ class CustomersController < ApplicationController
   include CustomersHelper
 
   def index
-    @customers = (Customer.all).to_a
+    @customers = Customer.all
   end
 
   def new
@@ -14,7 +14,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      redirect_to(customers_path, notice: created_notice(@customer))
+      redirect_to customers_path, notice: notice_msg(@customer, :created)
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     puts "Customer Params: #{customer_params.inspect}"
     if @customer.update(customer_params)
-      redirect_to customers_path, notice: updated_notice(@customer)
+      redirect_to customers_path, notice: notice_msg(@customer, :updated)
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     @customer.destroy
-    redirect_to customers_path, notice: deleted_notice(@customer)
+    redirect_to customers_path, notice: notice_msg(@customer, :deleted)
   end
 
   private

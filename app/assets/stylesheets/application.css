@@ -33,3 +33,26 @@ html {
 .minimal-padding {
     padding: .8rem;
 }
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.flash-msg {
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    position: absolute;
+    right:var(--form-element-spacing-vertical);
+    top: var(--form-element-spacing-horizontal);
+    background: transparent;
+    color: var(--primary);
+    border: var(--border-width) solid var(--primary);
+    border-radius: var(--border-radius);
+}
