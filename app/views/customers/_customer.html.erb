@@ -1,15 +1,14 @@
-<div class="container">
-<article id="<%= dom_id customer %>">
-  <header>
-    <h3><%= customer.full_name %></h3>
-  </header>
-
+<div class="flex-center">
+  <article id="<%= dom_id customer %>">
+    <header>
+      <h3 class= "margin-reset"><%= customer.full_name %></h3>
+    </header>
     <% visible_attributes(customer).keys.each do |key| %>
       <div>
         <strong class='font-size-medium'><%= key.titleize %>:</strong>
         <%= customer[key] %>
       </div>
     <% end %>
-<footer><%= page_btn_links customer %></footer>
-</article>
+    <footer><%= page_btn_links customer %></footer>
+  </article>
 </div>
