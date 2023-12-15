@@ -1,0 +1,39 @@
+<div class= "container">
+  <article>
+    <header class="flex-between">
+      <h3 class="margin-reset "><%= page_title(model) %></h3>
+      <%= link_to "Add New",  {action: :new }, class: "outline", role: "button" %>
+    </header>
+    <% if objects.size > 0 %>
+      <table>
+        <% attribute_function ||=  method(:visible_attributes) %>
+        <thead>
+          <tr>
+            <% attribute_function.call(objects.first).keys.each do |key| %>
+              <th><%= key.titleize %></th>
+            <% end %>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% objects.each do |object| %>
+            <tr>
+              <% attribute_function.call(object).values.each do |value| %>
+                <td>
+                  <% if value.is_a?(String) %>
+                    <%= value.present? ? (value.length > 20 ? truncate(value, length: 20) : value) : '' %>
+                  <% else %>
+                    <%= value %>
+                  <% end %>
+                </td>
+              <% end %>
+              <td><%= render "shared/table-dd", id: object.id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <h3 class="flex-center">You don't have any <%= model.to_s %> added!</h3>
+    <% end %>
+  </article>
+</div>

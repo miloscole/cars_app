@@ -1,17 +1,1 @@
-<div class="flex-center">
-  <article>
-    <header class="flex-between">
-      <h2 class= "margin-reset">Confirm your action!</h2>
-      <span>
-        <%= page_btn_links @customer %>
-      </span>
-    </header>
-    <%= form_for @customer, method: 'delete' do |f| %>
-      <div>
-        <h4>Are you sure you want permanetly delete customer <%= @customer.full_name %>?</h4>
-        <br>
-        <%= f.submit 'Delete customer', disable_with: "Submiting...", class: "outline"%>
-      </div>
-    <% end %>
-  </article>
-</div>
+<%= render "shared/main/delete", object: @customer, name: @customer.full_name %>

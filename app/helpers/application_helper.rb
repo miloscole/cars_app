@@ -1,4 +1,25 @@
 module ApplicationHelper
+  FIELD_TYPES = {
+    "notes" => :area,
+    "production_year" => :date,
+  }.freeze
+
+  def render_form_field(f, key, options = {})
+    default_options = { placeholder: key.titleize, class: "margin-reset" }
+    merged_options = default_options.merge(options)
+
+    ttt = FIELD_TYPES[key] || :text
+
+    case field_type
+    when :area
+      f.text_area(key, merged_options.merge(rows: 4))
+    when :date
+      f.date_field(key, merged_options)
+    else
+      f.text_field(key, merged_options)
+    end
+  end
+
   def visible_attributes(object, attributes_to_remove = [])
     unless attributes_to_remove.is_a?(Array)
       raise ArgumentError, "removed_attributes must be arrays"
@@ -48,9 +69,9 @@ module ApplicationHelper
   def page_title(model)
     if action_name != "index"
       first_word = (action_name == "edit") ? "Editing" : "New"
-      first_word + " #{model.class.to_s.downcase}"
+      "#{first_word} #{model.class.to_s.downcase}"
     else
-      "#{model.to_s.pluralize}"
+      model.to_s.pluralize
     end
   end
 end
