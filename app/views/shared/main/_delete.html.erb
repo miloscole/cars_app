@@ -1,0 +1,17 @@
+<div class="flex-center">
+  <article>
+    <header class="flex-between">
+      <h2 class= "margin-reset">Confirm your action!</h2>
+      <span>
+        <%= page_btn_links object %>
+      </span>
+    </header>
+    <%= form_for object, method: 'delete' do |f| %>
+      <div>
+        <h4>Are you sure you want permanetly delete <%= "#{object.class.to_s.downcase} #{name}" %>?</h4>
+        <br>
+        <%= f.submit "Delete #{object.class.to_s}", disable_with: "Submiting...", class: "outline"%>
+      </div>
+    <% end %>
+  </article>
+</div>

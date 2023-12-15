@@ -1,33 +1,6 @@
-<div class= "container">
-  <article>
-    <%= render 'shared/flash' %>
-    <header class="flex-between">
-      <h3 class="margin-reset "><%= page_title(Customer) %></h3>
-      <%= link_to "Add New", new_customer_path, class: "outline", role: "button" %>
-    </header>
-    <% if @customers.size > 0 %>
-      <table>
-        <thead>
-          <tr>
-            <% customer_visible_attributes(@customers.first).keys.each do |key| %>
-              <th><%= key.titleize %></th>
-            <% end %>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @customers.each do |customer| %>
-            <tr>
-              <% customer_visible_attributes(customer).values.each do |value| %>
-                <td><%= value %></td>
-              <% end %>
-              <td><%= render "shared/table-dd", id: customer.id %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <h3 class="flex-center">You don't have any customer added!</h3>
-    <% end %>
-  </article>
-</div>
+<%=
+  render "shared/main/index",
+  model: Customer,
+  objects: @customers,
+  attribute_function: method(:customer_visible_attributes)
+%>

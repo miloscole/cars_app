@@ -1,22 +1,22 @@
 <div class="container">
   <article>
     <header >
-      <span class = "flex-between minimal-padding">
-        <h3 class= "margin-reset">
-          <%= page_title(customer) %>
+      <span class="flex-between minimal-padding">
+        <h3 class="margin-reset">
+          <%= page_title(object) %>
         </h3>
         <span>
-          <%= page_btn_links customer %>
+          <%= page_btn_links object %>
         </span>
       </span>
     </header>
-    <%= form_for customer, data: { turbo: false } do |f| %>
+    <%= form_for object, data: { turbo: false } do |f| %>
       <div>
-        <% visible_attributes(customer).keys.each do |key| %>
+        <% visible_attributes(object).keys.each do |key| %>
           <div class= "minimal-padding">
             <%= f.label key %>
-            <%= render_text_field_or_area(f, key) %>
-            <%= error_message_for(customer, key) %>
+            <%= render_form_field(f, key, field_type: ApplicationHelper::FIELD_TYPES[key]) %>
+            <%= error_message_for(object, key) %>
           </div>
         <% end %>
         <br>

@@ -1,0 +1,14 @@
+<div class="flex-center">
+  <article id="<%= dom_id object %>">
+    <header>
+      <h3 class= "margin-reset"><%= title %></h3>
+    </header>
+    <% visible_attributes(object).keys.each do |key| %>
+      <div>
+        <strong class='font-size-medium'><%= key.titleize %>:</strong>
+        <%= object[key] %>
+      </div>
+    <% end %>
+    <footer><%= page_btn_links object %></footer>
+  </article>
+</div>
