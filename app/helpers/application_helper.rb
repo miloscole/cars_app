@@ -2,21 +2,28 @@ module ApplicationHelper
   FIELD_TYPES = {
     "notes" => :area,
     "production_year" => :date,
+    "price" => :number,
+    "customer_id" => :dropdown,
   }.freeze
 
-  def render_form_field(f, key, options = {})
+  def render_form_field(f, key)
     default_options = { placeholder: key.titleize, class: "margin-reset" }
-    merged_options = default_options.merge(options)
 
-    ttt = FIELD_TYPES[key] || :text
+    field_type = FIELD_TYPES[key] || :text
 
     case field_type
     when :area
-      f.text_area(key, merged_options.merge(rows: 4))
+      f.text_area(key, default_options.merge(rows: 4))
     when :date
-      f.date_field(key, merged_options)
+      f.date_field(key, default_options)
+    when :number
+      f.number_field(key, default_options.merge(type: "number"))
+    when :dropdown
+      link = link_to "Add New", new_customer_path, data: { turbo_frame: "add_new_modal" }
+      select = f.select(key, get_all_customers)
+      link + select
     else
-      f.text_field(key, merged_options)
+      f.text_field(key, default_options)
     end
   end
 
