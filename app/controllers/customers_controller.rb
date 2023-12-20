@@ -1,6 +1,7 @@
 class CustomersController < ApplicationController
   include NoticeHelper
   include CustomersHelper
+  include ERB::Util
 
   def index
     @customers = Customer.all
@@ -8,15 +9,27 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def create
     @customer = Customer.new(customer_params)
 
-    if @customer.save
-      redirect_to customers_path, notice: notice_msg(@customer, :created)
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @customer.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            "car_customer_id",
+            html: "<option value='#{html_escape(@customer.id)}'>#{html_escape(@customer.full_name)}</option>".html_safe,
+          )
+        end
+        format.html { redirect_to customers_path, notice: notice_msg(@customer, :created) }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 

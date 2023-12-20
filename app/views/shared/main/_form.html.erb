@@ -5,17 +5,19 @@
         <h3 class="margin-reset">
           <%= page_title(object) %>
         </h3>
-        <span>
-          <%= page_btn_links object %>
-        </span>
+        <% if request.headers["Turbo-Frame"] %>
+          <span role="button" data-action="click->modal#closeModal" class="contrast outline">X</span>
+        <% else %>
+          <%= page_btn_links(object) %>
+        <% end %>
       </span>
     </header>
-    <%= form_for object, data: { turbo: false } do |f| %>
+    <%= form_for object, data: { turbo: true } do |f| %>
       <div>
         <% visible_attributes(object).keys.each do |key| %>
           <div class= "minimal-padding">
             <%= f.label key %>
-            <%= render_form_field(f, key, field_type: ApplicationHelper::FIELD_TYPES[key]) %>
+            <%= render_form_field(f, key) %>
             <%= error_message_for(object, key) %>
           </div>
         <% end %>

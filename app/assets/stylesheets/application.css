@@ -56,3 +56,14 @@ html {
     border: var(--border-width) solid var(--primary);
     border-radius: var(--border-radius);
 }
+
+/* Hot fix for customer drop down title position */
+label[for="car_customer_id"] {
+    margin-bottom: -25px;
+}
+
+/* Hot fix for add new customer link position */
+a[data-turbo-frame="add_new_modal"] {
+    display: flex;
+    justify-content: end;
+  }
