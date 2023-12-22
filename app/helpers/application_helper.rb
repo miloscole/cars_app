@@ -3,7 +3,13 @@ module ApplicationHelper
     "notes" => :area,
     "production_year" => :date,
     "price" => :number,
-    "customer_id" => :dropdown,
+    "displacement" => :number,
+    "power" => :number,
+    "customer_id" => :dynamic_dropdown,
+    "fuel_type" => :regular_dropdown,
+    "displacement" => :regular_dropdown,
+    "power" => :regular_dropdown,
+    "cylinders_num" => :regular_dropdown,
   }.freeze
 
   def render_form_field(f, key)
@@ -17,11 +23,13 @@ module ApplicationHelper
     when :date
       f.date_field(key, default_options)
     when :number
-      f.number_field(key, default_options.merge(type: "number"))
-    when :dropdown
+      f.number_field(key, default_options)
+    when :dynamic_dropdown
       link = link_to "Add New", new_customer_path, data: { turbo_frame: "add_new_modal" }
       select = f.select(key, get_all_customers)
       link + select
+    when :regular_dropdown
+      f.select(key, f.object.class.enum_keys(key))
     else
       f.text_field(key, default_options)
     end

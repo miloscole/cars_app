@@ -8,6 +8,7 @@ class CarsController < ApplicationController
 
   def new
     @car = Car.new
+    @car.build_engine
   end
 
   def create
@@ -51,6 +52,13 @@ class CarsController < ApplicationController
   private
 
   def car_params
-    params.require(:car).permit(:name, :model, :production_year, :price, :customer_id)
+    params.require(:car).permit(
+      :name,
+      :model,
+      :production_year,
+      :price,
+      :customer_id,
+      engine_attributes: [:fuel_type, :displacement, :power, :cylinders_num],
+    )
   end
 end

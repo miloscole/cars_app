@@ -1,0 +1,27 @@
+<div class="minimal-padding">
+  <article>
+    <h4>Engine</h4>
+    <table >
+      <thead>
+        <tr>
+          <% visible_attributes(engine, ["car_id"]).keys.each do |key| %>
+            <th><%= key.titleize %></th>
+          <% end %>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= form.fields_for :engine do |engine_form| %>
+          <tr>
+            <% visible_attributes(engine, ["car_id"]).keys.each do |key| %>
+              <td>
+                <%= render_form_field(engine_form, key) %>
+                <%= error_message_for(engine, key) %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </article>
+</div>
