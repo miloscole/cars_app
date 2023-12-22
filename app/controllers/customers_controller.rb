@@ -1,7 +1,6 @@
 class CustomersController < ApplicationController
   include NoticeHelper
   include CustomersHelper
-  include ERB::Util
 
   def index
     @customers = Customer.all
@@ -23,7 +22,7 @@ class CustomersController < ApplicationController
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(
             "car_customer_id",
-            html: "<option value='#{html_escape(@customer.id)}'>#{html_escape(@customer.full_name)}</option>".html_safe,
+            html: customer_dropdown_option(@customer),
           )
         end
         format.html { redirect_to customers_path, notice: notice_msg(@customer, :created) }
