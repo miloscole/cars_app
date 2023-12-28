@@ -1,17 +1,14 @@
 class CustomersController < ApplicationController
-  include NoticeHelper
   include CustomersHelper
+  include NoticeHelper
+  include Shared::IndexHelper
 
   def index
-    @customers = Customer.all
+    @objects = load_index_objects(Customer)
   end
 
   def new
     @customer = Customer.new
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
   end
 
   def create
@@ -20,10 +17,14 @@ class CustomersController < ApplicationController
     respond_to do |format|
       if @customer.save
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append(
-            "car_customer_id",
-            html: customer_dropdown_option(@customer),
-          )
+          if request.headers["Turbo-Frame"]
+            render turbo_stream: turbo_stream.append(
+              "car_customer_id",
+              html: customer_dropdown_option(@customer),
+            )
+          else
+            redirect_to customers_path, notice: notice_msg(@customer, :created)
+          end
         end
         format.html { redirect_to customers_path, notice: notice_msg(@customer, :created) }
       else
