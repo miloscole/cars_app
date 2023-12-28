@@ -1,9 +1,9 @@
 class CarsController < ApplicationController
   include NoticeHelper
-  include CarsHelper
+  include Shared::IndexHelper
 
   def index
-    @cars = Car.all
+    @objects = load_index_objects(Car)
   end
 
   def new

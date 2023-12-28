@@ -12,7 +12,7 @@
         <% end %>
       </span>
     </header>
-    <%= form_for object, data: { turbo: true } do |f| %>
+    <%= form_for object  do |f| %>
       <div>
         <% visible_attributes(object).keys.each do |key| %>
           <div class= "minimal-padding">

@@ -22,6 +22,10 @@ select {
     margin: 0
 }
 
+nav {
+    background-color: var(--card-sectionning-background-color)
+}
+
 .font-size-medium {
     font-size: 1.25rem;
 }
@@ -55,7 +59,7 @@ select {
     position: absolute;
     right: var(--form-element-spacing-vertical);
     top: var(--form-element-spacing-horizontal);
-    background: transparent;
+    background: var(--background-color);
     color: var(--primary);
     border: var(--border-width) solid var(--primary);
     border-radius: var(--border-radius);

@@ -1,1 +1,1 @@
-<%= render 'shared/main/form', object: @car, nested_form: "engines/form"%>
+<%= render 'shared/main/form', object: @car, nested_form: "engines/form", local: {engine: @car.engine}%>

@@ -4,19 +4,19 @@
       <h3 class="margin-reset "><%= page_title(model) %></h3>
       <%= link_to "Add New",  {action: :new }, class: "outline", role: "button" %>
     </header>
-    <% if objects.size > 0 %>
+    <% if @objects.size > 0 %>
       <table>
         <% attribute_function ||=  method(:visible_attributes) %>
         <thead>
           <tr>
-            <% attribute_function.call(objects.first).keys.each do |key| %>
+            <% attribute_function.call(@objects.first).keys.each do |key| %>
               <th><%= key.titleize %></th>
             <% end %>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <% objects.each do |object| %>
+          <% @objects.each do |object| %>
             <tr>
               <% attribute_function.call(object).values.each do |value| %>
                 <td>
@@ -32,6 +32,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= previous_next_links %>
     <% else %>
       <h3 class="flex-center">You don't have any <%= model.to_s %> added!</h3>
     <% end %>
