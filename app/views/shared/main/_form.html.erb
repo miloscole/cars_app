@@ -8,7 +8,9 @@
         <% if request.headers["Turbo-Frame"] %>
           <span role="button" data-action="click->modal#closeModal" class="contrast outline">X</span>
         <% else %>
-          <%= page_btn_links(object) %>
+          <div>
+            <%= page_btn_links(object) if Current.user %>
+          </div>
         <% end %>
       </span>
     </header>

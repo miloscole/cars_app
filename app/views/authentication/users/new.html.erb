@@ -1,0 +1,28 @@
+<div class="flex-center">
+  <article>
+    <header>
+      <h3 class= "margin-reset">Create your CarsApp account</h3>
+    </header>
+    <%= form_for @user do |f| %>
+      <div>
+        <%= f.label :email %>
+        <%= f.email_field :email, required: true %>
+        <%= error_message_for(@user, :email) %>
+      </div>
+      <div >
+        <%= f.label :username %>
+        <%= f.text_field :username, required: true %>
+        <%= error_message_for(@user, :username) %>
+      </div>
+      <div >
+        <%= f.label :password %>
+        <%= f.password_field :password, required: true %>
+        <%= error_message_for(@user, :password) %>
+      </div>
+      <br>
+      <div>
+        <%= f.submit "Create account", disable_with: "Submiting...", class: "outline"%>
+      </div>
+    <% end %>
+  </article>
+</div>
