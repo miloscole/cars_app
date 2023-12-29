@@ -23,7 +23,8 @@ select {
 }
 
 nav {
-    background-color: var(--card-sectionning-background-color)
+    background-color: var(--card-sectionning-background-color);
+    padding: 0 2.5rem 0 2.5rem ;
 }
 
 .font-size-medium {
@@ -31,7 +32,7 @@ nav {
 }
 
 .error-color {
-    color: #c62828;
+    color: var(--del-color);
 }
 
 .margin-reset {
@@ -54,7 +55,7 @@ nav {
     height: 75vh;
 }
 
-.flash-msg {
+.notice-msg {
     padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
     position: absolute;
     right: var(--form-element-spacing-vertical);
@@ -62,6 +63,17 @@ nav {
     background: var(--background-color);
     color: var(--primary);
     border: var(--border-width) solid var(--primary);
+    border-radius: var(--border-radius);
+}
+
+.alert-msg {
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    position: absolute;
+    right: var(--form-element-spacing-vertical);
+    top: var(--form-element-spacing-horizontal);
+    background: var(--del-color);
+    color: var(--primary-inverse);
+    border: var(--border-width) solid var(--primary-inverse);
     border-radius: var(--border-radius);
 }
 

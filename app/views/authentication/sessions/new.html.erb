@@ -1,0 +1,25 @@
+<div class="flex-center">
+  <article>
+    <header>
+      <h3 class= "margin-reset">Log in to Cars App</h3>
+    </header>
+    <%= form_with url: sessions_path do |f| %>
+      <div>
+        <%= f.label :login %>
+        <%= f.text_field :login, required: true%>
+      </div>
+      <div >
+        <%= f.label :password %>
+        <%= f.password_field :password, required: true %>
+      </div>
+      <br>
+      <div >
+        <%= f.submit "Login", disable_with: "Submiting...", class: "outline"%>
+      </div>
+    <% end %>
+    <footer>
+      <span class="minimal-padding">Are you here for the first time?</span>
+      <%= link_to "Create your account", new_user_path %>
+    </footer>
+  </article>
+</div>
