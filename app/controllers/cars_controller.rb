@@ -2,8 +2,11 @@ class CarsController < ApplicationController
   include NoticeHelper
   include Shared::IndexHelper
 
+  SEARCHABLE_FIELDS = [:name, :model]
+
   def index
-    @objects = load_index_objects(Car)
+    @objects = params[:query].present? ?
+      search_objects(Car, SEARCHABLE_FIELDS, params[:query]) : load_index_objects(Car)
   end
 
   def new
