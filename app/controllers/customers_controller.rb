@@ -3,8 +3,12 @@ class CustomersController < ApplicationController
   include NoticeHelper
   include Shared::IndexHelper
 
+  SEARCHABLE_FIELDS = [:first_name, :last_name, :email]
+
   def index
-    @objects = load_index_objects(Customer)
+    @objects = params[:query].present? ? search_objects(
+      Customer, SEARCHABLE_FIELDS, params[:query]
+    ) : load_index_objects(Customer)
   end
 
   def new

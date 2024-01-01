@@ -39,6 +39,10 @@ nav {
     margin: 0 !important;
 }
 
+.margin-default-right {
+    margin-right: 1rem !important;
+}
+
 .minimal-padding {
     padding: .8rem;
 }
@@ -52,7 +56,10 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75vh;
+}
+
+.page-default-height {
+    height: 70vh;
 }
 
 .notice-msg {
@@ -75,6 +82,11 @@ nav {
     color: var(--primary-inverse);
     border: var(--border-width) solid var(--primary-inverse);
     border-radius: var(--border-radius);
+}
+
+.index-search {
+   display: grid;
+   grid-template-columns: 70% 30%;
 }
 
 /* Hot fix for customer drop down title position */
