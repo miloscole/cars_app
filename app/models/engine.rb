@@ -7,7 +7,8 @@ class Engine < ApplicationRecord
 
   validates :fuel_type, :displacement, :power, :cylinders_num, presence: true
 
-  def self.enum_keys(attribute)
-    send(attribute.pluralize).keys
+  def self.enum_keys(key)
+    # Quick fix with pluralize since somehow enums are saved as pluralized (Rails behavior)
+    send(key.pluralize).keys
   end
 end

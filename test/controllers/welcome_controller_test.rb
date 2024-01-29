@@ -5,10 +5,10 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     login
   end
 
-  test "should get index" do
+  test "should get welcome as root path" do
     get root_path
 
-    assert_select "h2", 'Welcome to the "Cars application"'
     assert_response :success
+    assert_select "h2", 'Welcome to the "Cars application"'
   end
 end
