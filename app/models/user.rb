@@ -12,7 +12,7 @@ class User < ApplicationRecord
                          with: /\A[\w]+\z/,
                          message: :invalid,
                        }
-  validates :password, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }
 
   before_save :downcase_attributes
 

@@ -3,17 +3,25 @@ require "test_helper"
 class CustomersControllerTest < ActionDispatch::IntegrationTest
   def setup
     login
+
     @customer = customers(:customer1)
+    @customer_params = {
+      customer: {
+        first_name: @customer.first_name,
+        last_name: @customer.last_name,
+        email: @customer.email + "c",
+      },
+    }
   end
 
   test "should render a list of customers" do
     get customers_path
-    assert_response :success
 
+    assert_response :success
     assert_select ".customer", 2
   end
 
-  test "search a customer by query" do
+  test "should search a customer by query" do
     get customers_path(query: "Marko")
 
     assert_response :success
@@ -35,33 +43,24 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     assert_select "form"
   end
 
-  test "allows to create a new customer" do
-    post customers_path, params: {
-                           customer: {
-                             id: 3,
-                             first_name: "Jim",
-                             last_name: "Jimone",
-                             email: "jim@mjim.cc",
-                           },
-                         }
+  test "should allow to create a new customer" do
+    post customers_path, params: @customer_params
 
     assert_redirected_to customers_path
-    assert_equal flash[:notice], "Customer 3 was successfully created!"
+    assert_includes flash[:notice], "Customer"
+    assert_includes flash[:notice], "was successfully created"
   end
 
-  test "does not allow to create a new customer with empty fields" do
-    post customers_path, params: {
-                           customer: {
-                             first_name: "",
-                             last_name: "",
-                             email: "",
-                           },
-                         }
+  test "should not allow to create a new customer with empty fields" do
+    @customer_params[:customer][:first_name] = ""
+    @customer_params[:customer][:last_name] = ""
+    @customer_params[:customer][:email] = ""
+    post customers_path, params: @customer_params
 
     assert_response :unprocessable_entity
   end
 
-  test "render edit customer form" do
+  test "should render edit customer form" do
     get edit_customer_path(@customer)
 
     assert_response :success
@@ -69,28 +68,22 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     assert_select "form"
   end
 
-  test "allows to update a customer" do
-    patch customer_path(@customer), params: {
-                                      customer: {
-                                        last_name: "Micic",
-                                      },
-                                    }
+  test "should allow to update a customer" do
+    @customer_params[:customer][:last_name] = "Micic"
+    patch customer_path(@customer), params: @customer_params
 
     assert_redirected_to customers_path
     assert_equal flash[:notice], "Customer 1 was successfully updated!"
   end
 
-  test "does not allow to update a customer with an invalid field" do
-    patch customer_path(@customer), params: {
-                                      customer: {
-                                        last_name: "",
-                                      },
-                                    }
+  test "should not allow to update a customer with an invalid field" do
+    @customer_params[:customer][:last_name] = ""
+    patch customer_path(@customer), params: @customer_params
 
     assert_response :unprocessable_entity
   end
 
-  test "render delete customer form" do
+  test "should render delete customer form" do
     get delete_customer_path(@customer)
 
     assert_response :success
@@ -98,11 +91,10 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     assert_select "form"
   end
 
-  test "can delete customers" do
+  test "should delete customer" do
     assert_difference("Customer.count", -1) do
       delete customer_path(@customer)
     end
-
     assert_redirected_to customers_path
     assert_equal flash[:notice], "Customer 1 was successfully deleted!"
   end
