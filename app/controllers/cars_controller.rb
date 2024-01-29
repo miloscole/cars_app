@@ -34,7 +34,7 @@ class CarsController < ApplicationController
     if @car.update(car_params)
       redirect_to cars_path, notice: notice_msg(@car, :updated)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -61,7 +61,7 @@ class CarsController < ApplicationController
       :production_year,
       :price,
       :customer_id,
-      engine_attributes: [:fuel_type, :displacement, :power, :cylinders_num],
+      engine_attributes: [:id, :fuel_type, :displacement, :power, :cylinders_num],
     )
   end
 end

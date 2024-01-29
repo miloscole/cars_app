@@ -1,13 +1,20 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  model: MyString
+car1:
+  id: 1
+  name: Mazda
+  model: Premio
   production_year: 2023-12-15
-  price: 1
+  price: 222
 
-two:
-  name: MyString
-  model: MyString
+car2:
+  id: 2
+  name: Kia
+  model: CEED
   production_year: 2023-12-15
-  price: 1
+  price: 2222
+  customer_id: 2
+
+
+
+

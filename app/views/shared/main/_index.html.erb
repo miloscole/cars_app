@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <% @objects.each do |object| %>
-            <tr>
+            <tr class="<%= object.class.to_s.downcase %>">
               <% attribute_function.call(object).values.each do |value| %>
                 <td>
                   <% if value.is_a?(String) %>

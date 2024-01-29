@@ -10,4 +10,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def login
+    post sessions_path, params: { login: "userone@user.cc", password: "testme" }
+  end
 end
