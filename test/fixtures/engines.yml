@@ -1,13 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  fuel_type: MyString
-  displacement: MyString
-  power: 1
-  cylinders_num: 1
+  id: 1
+  fuel_type: benzine
+  displacement: 1.2
+  power: 60
+  cylinders_num: 8
+  car_id: 1
 
 two:
-  fuel_type: MyString
-  displacement: MyString
-  power: 1
-  cylinders_num: 1
+  id: 2
+  fuel_type: diesel
+  displacement: 1.6
+  power: 100
+  cylinders_num: 8
+  car_id: 2

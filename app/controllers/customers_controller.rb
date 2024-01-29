@@ -47,7 +47,7 @@ class CustomersController < ApplicationController
     if @customer.update(customer_params)
       redirect_to customers_path, notice: notice_msg(@customer, :updated)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
