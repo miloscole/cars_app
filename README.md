@@ -1,25 +1,61 @@
-# README
+# CarsApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+"This is a simple demonstration application built with Ruby on Rails that covers basic CRUD operations for managing cars and linking them with customers."
 
-Things you may want to cover:
+## Ruby and Rails versions
 
-* Ruby version
+This application requires Ruby version 3.2.0.
+This application requires Rails version 7.0 or higher.
 
-* System dependencies
+## System dependencies
 
-* Configuration
+Make sure you have PostgreSQL installed on your system. You can download and install PostgreSQL from
+[here](https://www.postgresql.org/download/).
 
-* Database creation
+## Configuration
 
-* Database initialization
+1. **Clone the repository:**
 
-* How to run the test suite
+    git clone https://github.com/miloscole/cars_app.git
 
-* Services (job queues, cache servers, search engines, etc.)
+2. **Install dependencies:**
 
-* Deployment instructions
+    `cd cars_app`
+    `bundle install`
 
-* ...
-# cars_app
+3. **Database configuration:**
+
+    Update the `config/database.yml` file with your PostgreSQL username and password:
+
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: your_username
+  password: your_password
+  host: localhost
+  port: 5432
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: cars_app_development
+
+test:
+  <<: *default
+  database: cars_app_test
+```
+**Make sure you have created the databases (cars_app_development and cars_app_test) in your PostgreSQL instance.**
+
+**Database creation:**
+
+Run the following commands to create and migrate the databases:
+
+`rails db:create`
+`rails db:migrate`
+
+## How to run the test suite
+
+Run the test suite using the following command:
+
+`rails test`
