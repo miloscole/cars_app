@@ -54,7 +54,7 @@ Run the following commands to create and migrate the databases:
 `rails db:create`
 `rails db:migrate`
 
-# How to run the test suite
+## How to run the test suite
 
 Run the test suite using the following command:
 
