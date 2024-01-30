@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+car1:
+  id: 1
+  name: Mazda
+  model: Premio
+  production_year: 2023-12-15
+  price: 222
+
+car2:
+  id: 2
+  name: Kia
+  model: CEED
+  production_year: 2023-12-15
+  price: 2222
+  customer_id: 2
+
+car3:
+  id: 3
+  name: Audi
+  model: A3
+  production_year: 2023-12-15
+  price: 2222
+
+
+
+

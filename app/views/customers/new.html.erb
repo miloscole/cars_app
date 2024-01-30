@@ -1,4 +1,9 @@
-<div class="container">
-    <h3>New Customer</h3>
-    <%= render 'customers/form', customer: @customer %>
-</div>
+<% if request.headers["Turbo-Frame"] %>
+  <%= turbo_frame_tag "add_new_modal" do %>
+    <dialog open class="container" data-controller="modal">
+      <%= render 'shared/main/form', object: @customer %>
+    </dialog>
+  <% end %>
+<% else %>
+  <%= render 'shared/main/form', object: @customer %>
+<% end %>

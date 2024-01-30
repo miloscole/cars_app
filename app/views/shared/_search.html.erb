@@ -1,0 +1,9 @@
+<%= form_with action: :index, method: :get, class: "margin-reset" do |f| %>
+  <div class="index-search">
+    <span class="flex-center margin-default-right">
+      <%= link_to "Reset", {action: :index}, class: "margin-reset margin-default-right" if params[:query].present?%>
+      <%= f.search_field :query, class: "margin-reset", value: params[:query] %>
+    </span>
+    <%= f.submit "Search" , class: "margin-reset" %>
+  </div>
+<% end %>

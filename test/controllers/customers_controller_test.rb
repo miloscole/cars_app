@@ -1,43 +1,101 @@
 require "test_helper"
 
 class CustomersControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get customers_index_url
-    assert_response :success
+  def setup
+    login
+
+    @customer = customers(:customer1)
+    @customer_params = {
+      customer: {
+        first_name: @customer.first_name,
+        last_name: @customer.last_name,
+        email: @customer.email + "c",
+      },
+    }
   end
 
-  test "should get show" do
-    get customers_show_url
+  test "should render a list of customers" do
+    get customers_path
+
     assert_response :success
+    assert_select ".customer", 2
   end
 
-  test "should get new" do
-    get customers_new_url
+  test "should search a customer by query" do
+    get customers_path(query: "Marko")
+
     assert_response :success
+    assert_select ".customer", 1
   end
 
-  test "should get create" do
-    get customers_create_url
+  test "should render show" do
+    get customer_path(@customer)
+
     assert_response :success
+    assert_select ".title", "Marko Markovic"
   end
 
-  test "should get edit" do
-    get customers_edit_url
+  test "should render a new customer form" do
+    get new_customer_path
+
     assert_response :success
+    assert_select "h3", "New customer"
+    assert_select "form"
   end
 
-  test "should get update" do
-    get customers_update_url
-    assert_response :success
+  test "should allow to create a new customer" do
+    post customers_path, params: @customer_params
+
+    assert_redirected_to customers_path
+    assert_includes flash[:notice], "Customer"
+    assert_includes flash[:notice], "was successfully created"
   end
 
-  test "should get delete" do
-    get customers_delete_url
-    assert_response :success
+  test "should not allow to create a new customer with empty fields" do
+    @customer_params[:customer][:first_name] = ""
+    @customer_params[:customer][:last_name] = ""
+    @customer_params[:customer][:email] = ""
+    post customers_path, params: @customer_params
+
+    assert_response :unprocessable_entity
   end
 
-  test "should get destroy" do
-    get customers_destroy_url
+  test "should render edit customer form" do
+    get edit_customer_path(@customer)
+
     assert_response :success
+    assert_select "h3", "Editing customer"
+    assert_select "form"
+  end
+
+  test "should allow to update a customer" do
+    @customer_params[:customer][:last_name] = "Micic"
+    patch customer_path(@customer), params: @customer_params
+
+    assert_redirected_to customers_path
+    assert_equal flash[:notice], "Customer 1 was successfully updated!"
+  end
+
+  test "should not allow to update a customer with an invalid field" do
+    @customer_params[:customer][:last_name] = ""
+    patch customer_path(@customer), params: @customer_params
+
+    assert_response :unprocessable_entity
+  end
+
+  test "should render delete customer form" do
+    get delete_customer_path(@customer)
+
+    assert_response :success
+    assert_select "h2", "Confirm your action!"
+    assert_select "form"
+  end
+
+  test "should delete customer" do
+    assert_difference("Customer.count", -1) do
+      delete customer_path(@customer)
+    end
+    assert_redirected_to customers_path
+    assert_equal flash[:notice], "Customer 1 was successfully deleted!"
   end
 end

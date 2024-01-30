@@ -1,10 +1,1 @@
-<div class='container'>
-  <h2>Delete Customer</h2>
-  <%= form_for @customer, method: 'delete',  data: { turbo: false } do |f| %>
-    <div>
-      <p>Are you sure you want permanetly delete this customer</p>
-      <p><%= @customer.first_name %></p>
-      <%= f.submit 'Delete customer', disable_with: "Submiting..."%>
-    </div>
-  <% end %>
-</div>
+<%= render "shared/main/delete", object: @customer, name: @customer.full_name %>

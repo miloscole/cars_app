@@ -1,0 +1,27 @@
+<nav>
+  <ul>
+    <li><strong><%= link_to "CarsApp",  root_path %></strong></li>
+  </ul>
+  <ul>
+    <li>
+      <%= link_to "Customers", customers_path %>
+    </li>
+    <li>
+      <%= link_to "Cars", cars_path %>
+    </li>
+    <li>
+      <details role="list">
+        <summary  role="button"><%= Current.user.username %></summary>
+        <ul role="listbox">
+          <li>
+            <%= link_to "Log out",  session_path(Current.user.id), data: {
+                 turbo_method: :delete ,
+                 turbo_confirm: "Are you sure?"
+                 }
+                 %>
+          </li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,67 @@
+class CarsController < ApplicationController
+  include NoticeHelper
+  include Shared::IndexHelper
+
+  SEARCHABLE_FIELDS = [:name, :model]
+
+  def index
+    @objects = params[:query].present? ?
+      search_objects(Car, SEARCHABLE_FIELDS, params[:query]) : load_index_objects(Car)
+  end
+
+  def new
+    @car = Car.new
+    @car.build_engine
+  end
+
+  def create
+    @car = Car.new(car_params)
+
+    if @car.save
+      redirect_to cars_path, notice: notice_msg(@car, :created)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @car = Car.find(params[:id])
+  end
+
+  def update
+    @car = Car.find(params[:id])
+
+    if @car.update(car_params)
+      redirect_to cars_path, notice: notice_msg(@car, :updated)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @car = Car.find(params[:id])
+  end
+
+  def delete
+    @car = Car.find(params[:id])
+  end
+
+  def destroy
+    @car = Car.find(params[:id])
+    @car.destroy
+    redirect_to cars_path, notice: notice_msg(@car, :deleted)
+  end
+
+  private
+
+  def car_params
+    params.require(:car).permit(
+      :name,
+      :model,
+      :production_year,
+      :price,
+      :customer_id,
+      engine_attributes: [:id, :fuel_type, :displacement, :power, :cylinders_num],
+    )
+  end
+end

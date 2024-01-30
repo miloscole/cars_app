@@ -14,10 +14,88 @@
  *= require_self
  */
 
- html {
+html {
     font-size: 16px;
-  }
+}
 
-  .font-size-medium {
+select {
+    margin: 0
+}
+
+nav {
+    background-color: var(--card-sectionning-background-color);
+    padding: 0 2.5rem 0 2.5rem ;
+}
+
+.font-size-medium {
     font-size: 1.25rem;
-  }
+}
+
+.error-color {
+    color: var(--del-color);
+}
+
+.margin-reset {
+    margin: 0 !important;
+}
+
+.margin-default-right {
+    margin-right: 1rem !important;
+}
+
+.minimal-padding {
+    padding: .8rem;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-default-height {
+    height: 70vh;
+}
+
+.notice-msg {
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    position: absolute;
+    right: var(--form-element-spacing-vertical);
+    top: var(--form-element-spacing-horizontal);
+    background: var(--background-color);
+    color: var(--primary);
+    border: var(--border-width) solid var(--primary);
+    border-radius: var(--border-radius);
+}
+
+.alert-msg {
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    position: absolute;
+    right: var(--form-element-spacing-vertical);
+    top: var(--form-element-spacing-horizontal);
+    background: var(--del-color);
+    color: var(--primary-inverse);
+    border: var(--border-width) solid var(--primary-inverse);
+    border-radius: var(--border-radius);
+}
+
+.index-search {
+   display: grid;
+   grid-template-columns: 70% 30%;
+}
+
+/* Hot fix for customer drop down title position */
+label[for="car_customer_id"] {
+    margin-bottom: -25px;
+}
+
+/* Hot fix for add new customer link position */
+a[data-turbo-frame="add_new_modal"] {
+    display: flex;
+    justify-content: end;
+}

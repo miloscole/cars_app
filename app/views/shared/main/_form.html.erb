@@ -1,0 +1,34 @@
+<div class="container">
+  <article>
+    <header >
+      <span class="flex-between minimal-padding">
+        <h3 class="margin-reset">
+          <%= page_title(object) %>
+        </h3>
+        <% if request.headers["Turbo-Frame"] %>
+          <span role="button" data-action="click->modal#closeModal" class="contrast outline">X</span>
+        <% else %>
+          <div>
+            <%= page_btn_links(object, action_name) if Current.user %>
+          </div>
+        <% end %>
+      </span>
+    </header>
+    <%= form_for object  do |f| %>
+      <div>
+        <% visible_attributes(object).keys.each do |key| %>
+          <div class= "minimal-padding">
+            <%= f.label key %>
+            <%= render_form_field(f, key) %>
+            <%= error_message_for(object, key) %>
+          </div>
+        <% end %>
+        <%= render partial: nested_form, locals: {form: f }.merge(local) if defined?(nested_form)%>
+        <br>
+        <div class= "minimal-padding">
+          <%= f.submit disable_with: "Submiting...", class: "outline"%>
+        </div>
+      </div>
+    <% end %>
+  </article>
+</div>

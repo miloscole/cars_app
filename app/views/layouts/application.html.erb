@@ -10,6 +10,9 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <%= render "shared/flash" %>
+    <%= render "shared/nav" if action_name == 'index' %>
+    <%= turbo_frame_tag "add_new_modal" %>
     <%= yield %>
   </body>
 </html>

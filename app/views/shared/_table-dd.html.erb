@@ -1,0 +1,16 @@
+<details role="list" class="margin-reset">
+  <summary>
+    <%= image_tag "pen-icon.svg" %>
+  </summary>
+  <ul>
+    <li>
+      <%= link_to "View", action: "show", id: id %>
+    </li>
+    <li>
+      <%= link_to "Edit", action: "edit", id: id %>
+    </li>
+    <li>
+      <%= link_to "Delete", action: "delete", id: id %>
+    </li>
+  </ul>
+</details>
