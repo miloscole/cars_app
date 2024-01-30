@@ -9,7 +9,7 @@
           <span role="button" data-action="click->modal#closeModal" class="contrast outline">X</span>
         <% else %>
           <div>
-            <%= page_btn_links(object) if Current.user %>
+            <%= page_btn_links(object, action_name) if Current.user %>
           </div>
         <% end %>
       </span>
