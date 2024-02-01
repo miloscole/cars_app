@@ -1,5 +1,4 @@
 require "test_helper"
-require "minitest/autorun"
 require "mocha/minitest"
 
 class ApplicationHelperTest < ActionView::TestCase
@@ -21,19 +20,19 @@ class ApplicationHelperTest < ActionView::TestCase
     link_options_sec = { class: "secondary outline", role: "button" }
 
     self.stubs(:link_to).
-      with("Back to customers", back_link_params, link_options_sec).
+      with("Back to customers", back_link_params, **link_options_sec).
       returns(@back_btn)
 
     self.stubs(:link_to).
-      with("Show this customer", show_link_params, link_options).
+      with("Show this customer", show_link_params, **link_options).
       returns(@show_btn)
 
     self.stubs(:link_to).
-      with("Edit customer", edit_link_params, link_options).
+      with("Edit customer", edit_link_params, **link_options).
       returns(@edit_btn)
 
     self.stubs(:link_to).
-      with("Delete this customer", delete_link_params, link_options_sec).
+      with("Delete this customer", delete_link_params, **link_options_sec).
       returns(@delete_btn)
   end
 
@@ -65,13 +64,13 @@ class ApplicationHelperTest < ActionView::TestCase
   test "page_btn_links should return nil for 'index' action" do
     links = page_btn_links(@object, "index")
 
-    assert_equal links, nil
+    assert_nil links
   end
 
   test "page_btn_links should return nil for unexpected action" do
     links = page_btn_links(@object, "123abc")
 
-    assert_equal links, nil
+    assert_nil links
   end
 
   # Tests for page_title function
@@ -100,20 +99,20 @@ class ApplicationHelperTest < ActionView::TestCase
     self.stubs(:action_name).returns("show")
     title = page_title(@object)
 
-    assert_equal nil, title
+    assert_nil title
   end
 
   test "page_title should return nil for 'delete' action" do
     self.stubs(:action_name).returns("delete")
     title = page_title(@object)
 
-    assert_equal nil, title
+    assert_nil title
   end
 
   test "page_title should return nil for unexpected action" do
     self.stubs(:action_name).returns("123abc")
     title = page_title(@object)
 
-    assert_equal nil, title
+    assert_nil title
   end
 end

@@ -1,6 +1,6 @@
 # CarsApp
 
-"This is a simple demonstration application built with Ruby on Rails that covers basic CRUD operations for managing cars and linking them with customers."
+This is a simple demonstration application built with Ruby on Rails that covers basic CRUD operations for managing cars and linking them with customers.
 
 ## Ruby and Rails versions
 
@@ -11,6 +11,9 @@ This application requires Rails version 7.0 or higher.
 
 Make sure you have PostgreSQL installed on your system. You can download and install PostgreSQL from
 [here](https://www.postgresql.org/download/).
+
+Please note that this application uses Stimulus.js for handling JavaScript functionality.
+So, it is required to have Node.js installed on your system to manage JavaScript dependencies and assets.
 
 ## Configuration
 
@@ -59,3 +62,7 @@ Run the following commands to create and migrate the databases:
 Run the test suite using the following command:
 
 `rails test`
+
+## Helpful link for installing Ruby on Rails on Windows, macOS, and Ubuntu
+
+[link]https://gorails.com/setup/
