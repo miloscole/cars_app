@@ -30,7 +30,7 @@ module Shared
         select = f.select(key, get_all_customers)
         link + select
       when :regular_dropdown
-        f.select(key, f.object.class.enum_keys(key))
+        f.select(key, enum_keys(f.object.class, key))
       else
         f.text_field(key, default_options)
       end
@@ -43,6 +43,10 @@ module Shared
                     id: "#{attribute}_error",
                     class: "error-color"
       end
+    end
+
+    def enum_keys(klass, enum_name)
+      klass.defined_enums[enum_name].keys
     end
   end
 end
