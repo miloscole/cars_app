@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :customers, dependent: :destroy
+  has_many :cars, dependent: :destroy
   has_secure_password
 
   validates :email, presence: true, uniqueness: true,

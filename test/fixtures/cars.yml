@@ -6,6 +6,7 @@ car1:
   model: Premio
   production_year: 2023-12-15
   price: 222
+  user_id: 1
 
 car2:
   id: 2
@@ -14,6 +15,7 @@ car2:
   production_year: 2023-12-15
   price: 2222
   customer_id: 2
+  user_id: 1
 
 car3:
   id: 3
@@ -21,6 +23,7 @@ car3:
   model: A3
   production_year: 2023-12-15
   price: 2222
+  user_id: 1
 
 
 

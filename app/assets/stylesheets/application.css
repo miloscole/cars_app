@@ -71,6 +71,7 @@ nav {
     color: var(--primary);
     border: var(--border-width) solid var(--primary);
     border-radius: var(--border-radius);
+    z-index: 1;
 }
 
 .alert-msg {
@@ -82,6 +83,7 @@ nav {
     color: var(--primary-inverse);
     border: var(--border-width) solid var(--primary-inverse);
     border-radius: var(--border-radius);
+    z-index: 1;
 }
 
 .index-search {

@@ -5,7 +5,7 @@ module ApplicationHelper
                         role: "button"
 
     case current_action
-    when "edit"
+    when "edit", "update"
       show_link = link_to "Show this #{model.class.to_s.downcase}", { action: "show" },
                           class: "outline",
                           role: "button"
@@ -21,7 +21,7 @@ module ApplicationHelper
                             role: "button"
 
       "#{edit_link} #{delete_link} #{back_link}".html_safe
-    when "new", "delete"
+    when "new", "create", "delete"
       back_link
     else
       nil
@@ -33,9 +33,9 @@ module ApplicationHelper
     when "index"
       #"Strange situation for the index action: model.class will not work as expected (need to check this)."
       "#{model.to_s.pluralize}"
-    when "new"
+    when "new", "create"
       "New #{model.class.to_s.downcase}"
-    when "edit"
+    when "edit", "update"
       "Editing #{model.class.to_s.downcase}"
     else
       nil

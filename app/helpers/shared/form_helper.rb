@@ -36,10 +36,10 @@ module Shared
       end
     end
 
-    def error_message_for(model, attribute)
-      if model.errors[attribute].present?
+    def error_message_for(object, attribute)
+      if object.errors[attribute].present?
         content_tag :small,
-                    model.errors.full_messages_for(attribute).join(", "),
+                    object.errors.full_messages_for(attribute).join(", "),
                     id: "#{attribute}_error",
                     class: "error-color"
       end

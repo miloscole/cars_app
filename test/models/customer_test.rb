@@ -6,6 +6,7 @@ class CustomerTest < ActiveSupport::TestCase
       first_name: "Ana",
       last_name: "Anic",
       email: "ana@ana.cc",
+      user_id: 1,
     )
   end
 

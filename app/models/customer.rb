@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
-  has_many :car
+  belongs_to :user
+  has_many :cars, dependent: :nullify
 
   validates :first_name, presence: true, length: { minimum: 2, maximum: 25 }
   validates :last_name, presence: true, length: { minimum: 2, maximum: 25 }
