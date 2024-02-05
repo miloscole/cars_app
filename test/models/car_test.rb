@@ -7,6 +7,7 @@ class CarTest < ActiveSupport::TestCase
       model: "Camry",
       production_year: "2024-01-01",
       price: 30000,
+      user_id: 1,
     )
   end
 

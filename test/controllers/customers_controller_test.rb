@@ -10,6 +10,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
         first_name: @customer.first_name,
         last_name: @customer.last_name,
         email: @customer.email + "c",
+        user_id: 1,
       },
     }
   end

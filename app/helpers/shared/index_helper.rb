@@ -5,7 +5,7 @@ module Shared
         raise ArgumentError, "removed_attributes must be arrays"
       end
 
-      all_keys_to_remove = attributes_to_remove + ["id", "created_at", "updated_at"]
+      all_keys_to_remove = attributes_to_remove + ["id", "created_at", "updated_at", "user_id"]
 
       object.attributes.delete_if { |key, _| all_keys_to_remove.include?(key) }
     end
@@ -15,12 +15,14 @@ module Shared
       params[:page] ||= 1
       page = params[:page].to_i
 
-      total_records = model.all.size
+      user_objects = model.where(user_id: Current.user.id)
+
+      total_records = user_objects.size
       total_pages = (total_records.to_f / per_page).ceil
 
       @show_next_link = page < total_pages
 
-      model.limit(per_page).offset((page - 1) * per_page)
+      user_objects.limit(per_page).offset((page - 1) * per_page)
     end
 
     def previous_next_links

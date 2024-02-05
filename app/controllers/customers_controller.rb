@@ -5,6 +5,9 @@ class CustomersController < ApplicationController
 
   SEARCHABLE_FIELDS = [:first_name, :last_name, :email]
 
+  before_action :set_customer, only: [:edit, :update, :show, :delete, :destroy]
+  before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
+
   def index
     @objects = params[:query].present? ? search_objects(
       Customer, SEARCHABLE_FIELDS, params[:query]
@@ -17,6 +20,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
+    @customer.user = Current.user
 
     respond_to do |format|
       if @customer.save
@@ -38,12 +42,9 @@ class CustomersController < ApplicationController
   end
 
   def edit
-    @customer = Customer.find(params[:id])
   end
 
   def update
-    @customer = Customer.find(params[:id])
-
     if @customer.update(customer_params)
       redirect_to customers_path, notice: notice_msg(@customer, :updated)
     else
@@ -52,15 +53,12 @@ class CustomersController < ApplicationController
   end
 
   def show
-    @customer = Customer.find(params[:id])
   end
 
   def delete
-    @customer = Customer.find(params[:id])
   end
 
   def destroy
-    @customer = Customer.find(params[:id])
     @customer.destroy
     redirect_to customers_path, notice: notice_msg(@customer, :deleted)
   end
@@ -68,6 +66,16 @@ class CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :email, :phone, :notes)
+    params.require(:customer).permit(:first_name, :last_name, :email, :phone, :notes, :user_id)
+  end
+
+  def set_customer
+    @customer = Customer.find(params[:id])
+  end
+
+  def authorize_customer_owner
+    unless @customer.user == Current.user
+      redirect_to root_path, alert: "You are not authorized to access this customer."
+    end
   end
 end

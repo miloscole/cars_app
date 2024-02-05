@@ -7,6 +7,7 @@ customer1:
   email: marko@marko.cc
   phone: +381663017653
   notes: Simple note
+  user_id: 1
 
 customer2:
   id: 2
@@ -15,3 +16,4 @@ customer2:
   email: john@john.cc
   phone: +11143017653
   notes: Simple note
+  user_id: 1

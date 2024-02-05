@@ -6,7 +6,8 @@
         <%= page_btn_links(object, action_name) %>
       </span>
     </header>
-    <%= form_for object, method: 'delete' do |f| %>
+    <%= form_for object, method: 'delete', data:
+    { turbo_confirm: (defined?(associated) && associated) ? associated_msg : nil }  do  |f| %>
       <div>
         <h4>Are you sure you want permanetly delete <%= "#{object.class.to_s.downcase} #{name}" %>?</h4>
         <br>

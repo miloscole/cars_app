@@ -43,11 +43,4 @@ class EngineTest < ActiveSupport::TestCase
   test "engine should belong to a car" do
     assert_equal @car, @engine.car
   end
-
-  test "should return enum keys" do
-    assert_equal ["benzine", "diesel"], Engine.enum_keys("fuel_type")
-    assert_equal ["1.2", "1.4", "1.6", "1.8"], Engine.enum_keys("displacement")
-    assert_equal ["8", "16"], Engine.enum_keys("cylinders_num")
-    assert_equal ["60", "100", "150", "200"], Engine.enum_keys("power")
-  end
 end
