@@ -1,0 +1,5 @@
+<div>
+  <%= f.label :email %>
+  <%= f.email_field :email, required: true %>
+  <%= error_message_for(user, :email) if defined?(user) %>
+</div>

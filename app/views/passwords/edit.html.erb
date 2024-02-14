@@ -1,0 +1,8 @@
+<%= render "shared/auth/form",
+  title: "Change your password",
+  model: Current.user,
+  path: password_path,
+  submit_title: "Update password" do |f|
+%>
+  <%= render partial: "shared/auth/password_form", locals: { f: f, user: Current.user } %>
+<% end %>
