@@ -17,3 +17,12 @@ customer2:
   phone: +11143017653
   notes: Simple note
   user_id: 1
+
+customer3:
+  id: 3
+  first_name: Stanko
+  last_name: Stankovic
+  email: stanko@stanko.cc
+  phone: +11143097653
+  notes: Simple note
+  user_id: 2

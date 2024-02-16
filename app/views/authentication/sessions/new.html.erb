@@ -1,14 +1,9 @@
-<% content_for :footer_content do %>
-  <span class="minimal-padding">Are you here for the first time?</span>
-  <%= link_to "Create your account", new_user_path %>
-<% end %>
 <%= render "shared/auth/form",
   title: "Log in to Cars App",
   remove_back_btn: true,
   path: sessions_path,
   submit_title: "Login" do |f|
 %>
-  <%= render partial: "shared/auth/email_form", locals: { f: f} %>
   <div>
     <%= f.label :login %>
     <%= f.text_field :login, required: true%>
@@ -20,4 +15,8 @@
   <div>
     <%= link_to "Frogot your password?", password_reset_path %>
   </div>
+  <% content_for :footer do %>
+    <span class="minimal-padding">Are you here for the first time?</span>
+    <%= link_to "Create your account", new_user_path %>
+  <% end %>
 <% end %>

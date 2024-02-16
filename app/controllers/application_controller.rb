@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_path unless Current.user
   end
 
-  def search_objects(model, searchable_fields, query)
-    user_objects = model.where(user_id: Current.user.id)
+  def search_objects(klass, searchable_fields, query)
+    user_objects = klass.where(user_id: Current.user.id)
     user_objects.where(
-      searchable_fields.map { |field| "#{model.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
+      searchable_fields.map { |field| "#{klass.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
       query: "%#{query}%",
     )
   end

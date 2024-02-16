@@ -25,7 +25,7 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     @user_params[:password] = "pas"
     post sessions_path, params: @user_params
 
-    assert_redirected_to new_session_path
+    assert_response :unprocessable_entity
     assert_equal "Invalid login!", flash[:alert]
   end
 
@@ -33,7 +33,7 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     @user_params[:login] = "U"
     post sessions_path, params: @user_params
 
-    assert_redirected_to new_session_path
+    assert_response :unprocessable_entity
     assert_equal "Invalid login!", flash[:alert]
   end
 

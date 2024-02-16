@@ -1,11 +1,5 @@
 <% if request.headers["Turbo-Frame"] %>
-  <%= turbo_frame_tag "add_new_modal" do %>
-    <dialog open data-controller="modal">
-      <span class="flex-center">
-        <%= render 'shared/main/form', object: @customer %>
-      </span>
-    </dialog>
-  <% end %>
+  <%= render "customer_modal", customer: @customer %>
 <% else %>
   <%= render 'shared/main/form', object: @customer %>
 <% end %>
