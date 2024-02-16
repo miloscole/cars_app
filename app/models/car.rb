@@ -18,7 +18,7 @@ class Car < ApplicationRecord
   private
 
   def customer_belongs_to_current_user
-    unless customer && customer.user == Current.user
+    if customer.present? && customer.user != Current.user
       errors.add(:customer_id, "must belong to the current user")
     end
   end

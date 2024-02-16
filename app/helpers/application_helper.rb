@@ -31,7 +31,8 @@ module ApplicationHelper
   def page_title(model)
     case action_name
     when "index"
-      #"Strange situation for the index action: model.class will not work as expected (need to check this)."
+      #"Sending directly class as a model for index case to pick up the name,
+      #since I do not have any instance on the object before geting them all from db."
       "#{model.to_s.pluralize}"
     when "new", "create"
       "New #{model.class.to_s.downcase}"

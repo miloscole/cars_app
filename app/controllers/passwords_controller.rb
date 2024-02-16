@@ -6,7 +6,7 @@ class PasswordsController < ApplicationController
     if Current.user.update(passwords_params)
       redirect_to root_path, notice: "Successfully password updated"
     else
-      render "edit", status: 422
+      render "edit", status: :unprocessable_entity
     end
   end
 

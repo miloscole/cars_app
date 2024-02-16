@@ -1,6 +1,6 @@
 <%= render "shared/main/delete",
-object: @customer,
-name: @customer.full_name,
-associated: @customer.cars.any?,
-associated_msg: association_warning_msg(@customer.full_name, "cars")
+    object: @customer,
+    name: @customer.full_name,
+    associated: @customer.cars.any?,
+    associated_msg: association_warning_msg(@customer.full_name, "cars")
 %>

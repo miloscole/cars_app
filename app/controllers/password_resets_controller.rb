@@ -26,7 +26,7 @@ class PasswordResetsController < ApplicationController
     if @user.update(passwords_params)
       redirect_to new_session_path, notice: "Password reset successfully! Log in with a new password."
     else
-      render "edit", status: 422
+      render "edit", status: :unprocessable_entity
     end
   end
 

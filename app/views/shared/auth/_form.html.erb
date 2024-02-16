@@ -3,7 +3,7 @@
 <div class="flex-center page-default-height">
   <article>
     <header>
-      <span class="flex-center">
+      <span class="flex-between">
         <h3 class="margin-reset margin-default-right"><%= title %></h3>
         <%= link_to "Back to root",
           root_path,
@@ -21,9 +21,9 @@
         </div>
       <% end %>
     </div>
-    <% unless content_for(:footer_content).blank? %>
+    <% unless content_for(:footer).blank? %>
       <footer>
-        <%= yield :footer_content %>
+        <%= yield :footer %>
       </footer>
     <% end %>
   </article>
