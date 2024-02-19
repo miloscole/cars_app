@@ -19,7 +19,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     patch password_path, params: @user_params
 
     assert_redirected_to root_path
-    assert_equal "Successfully password updated", flash[:notice]
+    assert_equal "Successfully updated password", flash[:notice]
   end
 
   test "should not update password with short password" do

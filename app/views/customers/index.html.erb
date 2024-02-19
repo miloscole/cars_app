@@ -1,5 +1,6 @@
 <%=
   render "shared/main/index",
-  model: Customer,
-  attribute_function: method(:customer_visible_attributes)
+  klass: Customer,
+  objects: @customers,
+  attribute_fn_name: :customer_visible_attributes
 %>

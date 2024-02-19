@@ -15,7 +15,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test "should render a list of cars" do
+  test "should render a list of cars created by current user" do
     get cars_path
 
     assert_response :success
@@ -23,7 +23,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should search a car by query" do
-    get cars_path(query: "Mazda")
+    get cars_path(query: "#{@car.name}")
 
     assert_response :success
     assert_select ".car", 1
@@ -33,7 +33,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     get car_path(@car)
 
     assert_response :success
-    assert_select ".title", "Mazda"
+    assert_select ".title", "#{@car.name}"
   end
 
   test "should render a new car form" do
@@ -48,8 +48,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     post cars_path, params: @car_params
 
     assert_redirected_to cars_path
-    assert_includes flash[:notice], "Car"
-    assert_includes flash[:notice], "was successfully created"
+    assert_equal flash[:notice], "Car #{@car.full_name} was successfully created!"
   end
 
   test "should not allow to create a new car with empty fields" do
@@ -69,14 +68,15 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should allow to update a car" do
-    @car_params[:car][:model] = "Demio"
+    model = "Demio"
+    @car_params[:car][:model] = model
     patch car_path(@car), params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car 1 was successfully updated!"
+    assert_equal flash[:notice], "Car #{@car.name} #{model} was successfully updated!"
   end
 
-  test "should  not allow to update a car with an invalid field" do
+  test "should not allow to update a car with an invalid field" do
     @car_params[:car][:model] = ""
     patch car_path(@car), params: @car_params
 
@@ -96,6 +96,6 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
       delete car_path(@car)
     end
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car 1 was successfully deleted!"
+    assert_equal flash[:notice], "Car #{@car.full_name} was successfully deleted!"
   end
 end

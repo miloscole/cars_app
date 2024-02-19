@@ -8,7 +8,7 @@ class CarsController < ApplicationController
   before_action :authorize_car_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @objects = params[:query].present? ?
+    @cars = params[:query].present? ?
       search_objects(Car, SEARCHABLE_FIELDS, params[:query]) : load_index_objects(Car)
   end
 
@@ -21,7 +21,7 @@ class CarsController < ApplicationController
     @car = Car.new(car_params)
     @car.user = Current.user
     if @car.save
-      redirect_to cars_path, notice: notice_msg(@car, :created)
+      redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :created)
     else
       render :new, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class CarsController < ApplicationController
 
   def update
     if @car.update(car_params)
-      redirect_to cars_path, notice: notice_msg(@car, :updated)
+      redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :updated)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -46,7 +46,7 @@ class CarsController < ApplicationController
 
   def destroy
     @car.destroy
-    redirect_to cars_path, notice: notice_msg(@car, :deleted)
+    redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :deleted)
   end
 
   private

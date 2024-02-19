@@ -6,11 +6,11 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     @user_params = { login: @user.email, password: "testme" }
   end
 
-  test "should get new(login)" do
+  test "should get new (login)" do
     get new_session_path
 
     assert_response :success
-    assert_select "h3", "Log in to Cars App"
+    assert_select "h3", "Log in to CarsApp"
     assert_select "form"
   end
 
@@ -29,7 +29,7 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Invalid login!", flash[:alert]
   end
 
-  test "should redirect to new session path with invalid login(username/email)" do
+  test "should redirect to new session path with invalid login (username/email)" do
     @user_params[:login] = "U"
     post sessions_path, params: @user_params
 

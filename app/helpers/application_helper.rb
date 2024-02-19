@@ -31,7 +31,7 @@ module ApplicationHelper
   def page_title(model)
     case action_name
     when "index"
-      #"Sending directly class as a model for index case to pick up the name,
+      #"Sending class directly as a model for index case to pick up the name,
       #since I do not have any instance on the object before geting them all from db."
       "#{model.to_s.pluralize}"
     when "new", "create"
@@ -41,5 +41,12 @@ module ApplicationHelper
     else
       nil
     end
+  end
+
+  def truncate_value(value)
+    return "" unless value.present?
+    return value unless value.length > 20
+
+    value.truncate(20)
   end
 end

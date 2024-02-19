@@ -1,30 +1,34 @@
 <div class= "container">
   <article>
     <header class="flex-between">
-      <h3 class="margin-reset "><%= page_title(model) %></h3>
+      <h3 class="margin-reset "><%= page_title(klass) %></h3>
       <%= render "shared/search" %>
-      <%= link_to "Add New", {action: :new }, class: "outline", role: "button" %>
+      <%= link_to "Add New", { action: :new }, class: "outline", role: "button" %>
     </header>
-    <% if @objects.size > 0 %>
+    <% if objects.size > 0 %>
+      <% attribute_fn_name ||= :visible_attributes %>
       <table>
-        <% attribute_function ||=  method(:visible_attributes) %>
         <thead>
           <tr>
-            <% attribute_function.call(@objects.first).keys.each do |key| %>
+            <% send(attribute_fn_name, objects.first).keys.each do |key| %>
               <th><%= key.titleize %></th>
             <% end %>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <% @objects.each do |object| %>
+          <% objects.each do |object| %>
             <tr class="<%= object.class.to_s.downcase %>">
-              <% attribute_function.call(object).values.each do |value| %>
+              <% send(attribute_fn_name, object).each do |key, value| %>
                 <td>
                   <% if value.is_a?(String) %>
-                    <%= value.present? ? (value.length > 20 ? truncate(value, length: 20) : value) : '' %>
+                    <%= truncate_value(value) %>
                   <% else %>
-                    <%= value %>
+                    <% if  key.ends_with?("_id")%>
+                      <%= render_name_instead_of_reference_id(object, key)%>
+                    <% else %>
+                      <%= value %>
+                    <% end %>
                   <% end %>
                 </td>
               <% end %>
@@ -35,7 +39,7 @@
       </table>
       <%= previous_next_links %>
     <% else %>
-      <h3 class="flex-center page-default-height">You don't have any <%= model.to_s %> added!</h3>
+      <h3 class="flex-center page-default-height">You don't have any <%= klass.to_s %> added!</h3>
     <% end %>
   </article>
 </div>

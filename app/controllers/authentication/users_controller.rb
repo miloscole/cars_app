@@ -12,7 +12,7 @@ class Authentication::UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: notice_msg(@user, :created)
+      redirect_to root_path, notice: notice_msg(@user, @user.username, :created)
     else
       render :new, status: :unprocessable_entity
     end

@@ -5,8 +5,14 @@
     </header>
     <% visible_attributes(object).keys.each do |key| %>
       <div>
-        <strong class='font-size-medium'><%= key.titleize %>:</strong>
-        <%= object[key] %>
+        <% if object[key].present?%>
+          <strong class='font-size-medium'><%= key.titleize %>:</strong>
+        <% end %>
+        <% if  key.ends_with?("_id")%>
+          <%= render_name_instead_of_reference_id(object, key)%>
+        <% else %>
+          <%= object[key] %>
+        <% end %>
       </div>
     <% end %>
     <footer><%= page_btn_links(object, action_name) %></footer>
