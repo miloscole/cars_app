@@ -2,7 +2,7 @@ module Shared
   module IndexHelper
     def visible_attributes(object, attributes_to_remove = [])
       unless attributes_to_remove.is_a?(Array)
-        raise ArgumentError, "removed_attributes must be arrays"
+        raise ArgumentError, "attributes_to_remove must be array"
       end
 
       all_keys_to_remove = attributes_to_remove + ["id", "created_at", "updated_at", "user_id"]
@@ -10,16 +10,15 @@ module Shared
       object.attributes.delete_if { |key, _| all_keys_to_remove.include?(key) }
     end
 
-    def load_index_objects(model)
+    def load_index_objects(klass)
       per_page = 6
       params[:page] ||= 1
       page = params[:page].to_i
 
-      user_objects = model.where(user_id: Current.user.id)
+      user_objects = klass.where(user_id: Current.user.id)
 
       total_records = user_objects.size
       total_pages = (total_records.to_f / per_page).ceil
-
       @show_next_link = page < total_pages
 
       user_objects.limit(per_page).offset((page - 1) * per_page)
@@ -35,6 +34,17 @@ module Shared
 
       content = previous_link.to_s + space_between + next_link.to_s
       content_tag(:footer, content.html_safe) if show_previous_link || @show_next_link
+    end
+
+    def render_name_instead_of_reference_id(object, key_with_id)
+      unless key_with_id.end_with?("_id")
+        raise ArgumentError, "Sent argument is not a reference id"
+      end
+
+      association_name = key_with_id.chomp("_id")
+      association = object.send(association_name)
+
+      association ? association.full_name : ""
     end
   end
 end

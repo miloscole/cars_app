@@ -21,16 +21,14 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     assert_enqueued_emails 1 do
       post password_reset_path, params: { email: @user.email }
     end
-
     assert_redirected_to new_session_path
     assert_equal "We sent an email if user with provided email address is found", flash[:notice]
   end
 
-  test "should not create password reset with unexisting email" do
+  test "should not create password reset with non-existing email" do
     assert_enqueued_emails 0 do
       post password_reset_path, params: { email: "wrong@email.cc" }
     end
-
     assert_redirected_to new_session_path
     assert_equal "We sent an email if user with provided email address is found", flash[:notice]
   end

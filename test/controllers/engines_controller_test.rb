@@ -22,7 +22,7 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test "should render creating engine table inside new car form" do
+  test "should render creating engine table inside a new car form" do
     get new_car_path
 
     assert_response :success
@@ -53,15 +53,15 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
     assert_select "form table #car_engine_attributes_fuel_type"
   end
 
-  test "allows to update a engine" do
+  test "should allow to update an engine" do
     @car_params[:car][:engine_attributes][:power] = 150
     patch car_path(@car), params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car 2 was successfully updated!"
+    assert_equal flash[:notice], "Car #{@car.full_name} was successfully updated!"
   end
 
-  test "should not allow to update a engine" do
+  test "should not allow to update an engine" do
     @car_params[:car][:engine_attributes][:fuel_type] = nil
     patch car_path(@car), params: @car_params
 
@@ -73,6 +73,6 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
       delete car_path(@car)
     end
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car 2 was successfully deleted!"
+    assert_equal flash[:notice], "Car #{@car.full_name} was successfully deleted!"
   end
 end

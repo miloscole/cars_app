@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
   before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @objects = params[:query].present? ? search_objects(
+    @customers = params[:query].present? ? search_objects(
       Customer, SEARCHABLE_FIELDS, params[:query]
     ) : load_index_objects(Customer)
   end
@@ -31,10 +31,14 @@ class CustomersController < ApplicationController
               html: customer_dropdown_option(@customer),
             )
           else
-            redirect_to customers_path, notice: notice_msg(@customer, :created)
+            redirect_to customers_path,
+                        notice: notice_msg(@customer, @customer.full_name, :created)
           end
         end
-        format.html { redirect_to customers_path, notice: notice_msg(@customer, :created) }
+        format.html {
+          redirect_to customers_path,
+                      notice: notice_msg(@customer, @customer.full_name, :created)
+        }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -46,7 +50,7 @@ class CustomersController < ApplicationController
 
   def update
     if @customer.update(customer_params)
-      redirect_to customers_path, notice: notice_msg(@customer, :updated)
+      redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :updated)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,7 +64,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer.destroy
-    redirect_to customers_path, notice: notice_msg(@customer, :deleted)
+    redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :deleted)
   end
 
   private

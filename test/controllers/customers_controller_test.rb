@@ -15,7 +15,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test "should render a list of customers" do
+  test "should render a list of customers created by current user" do
     get customers_path
 
     assert_response :success
@@ -23,7 +23,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should search a customer by query" do
-    get customers_path(query: "Marko")
+    get customers_path(query: "#{@customer.first_name}")
 
     assert_response :success
     assert_select ".customer", 1
@@ -33,7 +33,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     get customer_path(@customer)
 
     assert_response :success
-    assert_select ".title", "Marko Markovic"
+    assert_select ".title", "#{@customer.full_name}"
   end
 
   test "should render a new customer form" do
@@ -48,8 +48,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     post customers_path, params: @customer_params
 
     assert_redirected_to customers_path
-    assert_includes flash[:notice], "Customer"
-    assert_includes flash[:notice], "was successfully created"
+    assert_equal flash[:notice], "Customer #{@customer.full_name} was successfully created!"
   end
 
   test "should not allow to create a new customer with empty fields" do
@@ -70,11 +69,13 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should allow to update a customer" do
-    @customer_params[:customer][:last_name] = "Micic"
+    last_name = "Micic"
+    @customer_params[:customer][:last_name] = last_name
     patch customer_path(@customer), params: @customer_params
 
     assert_redirected_to customers_path
-    assert_equal flash[:notice], "Customer 1 was successfully updated!"
+    assert_equal flash[:notice],
+                 "Customer #{@customer.first_name} #{last_name} was successfully updated!"
   end
 
   test "should not allow to update a customer with an invalid field" do
@@ -97,6 +98,6 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
       delete customer_path(@customer)
     end
     assert_redirected_to customers_path
-    assert_equal flash[:notice], "Customer 1 was successfully deleted!"
+    assert_equal flash[:notice], "Customer #{@customer.full_name} was successfully deleted!"
   end
 end

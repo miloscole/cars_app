@@ -115,4 +115,18 @@ class ApplicationHelperTest < ActionView::TestCase
 
     assert_nil title
   end
+
+  # Tests for truncate_value function
+  test "truncate_value should return empty string if value is nil" do
+    assert_equal "", truncate_value(nil)
+  end
+
+  test "truncate_value should return value if it is shorter than 20 characters" do
+    assert_equal "Less than 20", truncate_value("Less than 20")
+  end
+
+  test "truncate_value should truncate value longer than 20 characters" do
+    long_value = "Very long value with more that 20 characters"
+    assert_equal "Very long value w...", truncate_value(long_value)
+  end
 end
