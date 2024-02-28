@@ -7,7 +7,7 @@ class CustomersController < ApplicationController
   before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @customers = params[:query].present? ? search_customers : load_customers
+    @customers = params[:query].present? ? search_customers(params[:query]) : load_customers
   end
 
   def new

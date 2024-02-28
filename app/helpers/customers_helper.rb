@@ -15,9 +15,9 @@ module CustomersHelper
     load_index_objects(Customer, FIELDS_FOR_LOAD)
   end
 
-  def search_customers
+  def search_customers(query)
     customers = load_customers
-    search_objects(customers, SEARCHABLE_FIELDS, Customer)
+    search_objects(customers, SEARCHABLE_FIELDS, Customer, query)
   end
 
   def customer_dropdown_option(cus)

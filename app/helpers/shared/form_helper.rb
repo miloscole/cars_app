@@ -13,19 +13,22 @@ module Shared
       "cylinders_num" => :regular_dropdown,
     }.freeze
 
-    def render_form_field(f, key)
+    def render_form_field(f, key, area_options = {})
       default_options = { placeholder: key.titleize, class: "margin-reset" }
 
       field_type = FIELD_TYPES[key] || :text
 
       case field_type
       when :area
-        f.text_area(key, default_options.merge(rows: 4))
+        f.text_area(key, default_options.merge(rows: area_options[:rows] || 4))
       when :date
         f.date_field(key, default_options)
       when :number
         f.number_field(key, default_options)
       when :dynamic_dropdown
+        # Dynamic dropdown is currently only used for adding new customers.
+        # TODO: Add a hash parameter to render_form_field and
+        # reconsider how to handle it to avoid breaking logic for shared forms.
         link = link_to "Add New", new_customer_path, data: { turbo_frame: "add_new_modal" }
         select = f.select(key, all_customers_for_car)
         link + select
