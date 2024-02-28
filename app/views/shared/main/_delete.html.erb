@@ -9,7 +9,7 @@
     <%= form_for object, method: 'delete', data:
     { turbo_confirm: (defined?(associated) && associated) ? associated_msg : nil }  do  |f| %>
       <div>
-        <h4>Are you sure you want permanetly delete <%= "#{object.class.to_s.downcase} #{name}" %>?</h4>
+        <h4>Are you sure you want to permanently delete <%= "#{object.class.to_s.downcase} #{name}" %>?</h4>
         <br>
         <%= f.submit "Delete #{object.class.to_s}", disable_with: "Submiting...", class: "outline"%>
       </div>

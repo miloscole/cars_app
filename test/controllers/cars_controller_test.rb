@@ -7,7 +7,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     @car = cars(:car1)
     @car_params = {
       car: {
-        name: @car.name,
+        brand: @car.brand,
         model: @car.model,
         production_year: @car.production_year,
         price: @car.price,
@@ -23,7 +23,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should search a car by query" do
-    get cars_path(query: "#{@car.name}")
+    get cars_path(query: "#{@car.brand}")
 
     assert_response :success
     assert_select ".car", 1
@@ -33,7 +33,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     get car_path(@car)
 
     assert_response :success
-    assert_select ".title", "#{@car.name}"
+    assert_select ".title", "#{@car.full_name}"
   end
 
   test "should render a new car form" do
@@ -52,7 +52,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not allow to create a new car with empty fields" do
-    @car_params[:car][:name] = ""
+    @car_params[:car][:brand] = ""
     @car_params[:car][:model] = ""
     post cars_path, params: @car_params
 
@@ -73,7 +73,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     patch car_path(@car), params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.name} #{model} was successfully updated!"
+    assert_equal flash[:notice], "Car #{@car.brand} #{model} was successfully updated!"
   end
 
   test "should not allow to update a car with an invalid field" do

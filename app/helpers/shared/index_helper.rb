@@ -1,50 +1,45 @@
 module Shared
   module IndexHelper
-    def visible_attributes(object, attributes_to_remove = [])
-      unless attributes_to_remove.is_a?(Array)
-        raise ArgumentError, "attributes_to_remove must be array"
-      end
+    OBJECTS_PER_PAGE = 6
 
-      all_keys_to_remove = attributes_to_remove + ["id", "created_at", "updated_at", "user_id"]
-
-      object.attributes.delete_if { |key, _| all_keys_to_remove.include?(key) }
+    def object_attributes(object, id_column_shown = false)
+      attributes = object.attributes.to_h
+      attributes.delete("id") unless id_column_shown
+      attributes
     end
 
-    def load_index_objects(klass)
-      per_page = 6
+    def load_index_objects(klass, fields_for_load, &additional_query)
       params[:page] ||= 1
-      page = params[:page].to_i
+      current_page = params[:page].to_i
 
-      user_objects = klass.where(user_id: Current.user.id)
+      query = klass.where(user_id: Current.user.id)
 
-      total_records = user_objects.size
-      total_pages = (total_records.to_f / per_page).ceil
-      @show_next_link = page < total_pages
+      if block_given?
+        query = yield(query)
+      end
 
-      user_objects.limit(per_page).offset((page - 1) * per_page)
+      user_objects = query.select(fields_for_load.join(", "))
+
+      @total_records = user_objects.size
+
+      user_objects.limit(OBJECTS_PER_PAGE).offset((current_page - 1) * OBJECTS_PER_PAGE)
     end
 
     def previous_next_links
-      show_previous_link = params[:page].to_i > 1
-      previous_link = link_to "< Previous", action: "index", page: (params[:page].to_i - 1) if show_previous_link
-      next_link = link_to "Next >", action: "index", page: (params[:page].to_i + 1) if @show_next_link
-      space_between = " | " if show_previous_link && @show_next_link
+      current_page = params[:page].to_i
+      total_pages = (@total_records.to_f / OBJECTS_PER_PAGE).ceil
+
+      show_next_link = current_page < total_pages
+      show_previous_link = current_page > 1
+
+      previous_link = link_to "< Previous", action: "index", page: (current_page - 1) if show_previous_link
+      next_link = link_to "Next >", action: "index", page: (current_page + 1) if show_next_link
+      space_between = " | " if show_previous_link && show_next_link
 
       space_between ||= ""
 
       content = previous_link.to_s + space_between + next_link.to_s
-      content_tag(:footer, content.html_safe) if show_previous_link || @show_next_link
-    end
-
-    def render_name_instead_of_reference_id(object, key_with_id)
-      unless key_with_id.end_with?("_id")
-        raise ArgumentError, "Sent argument is not a reference id"
-      end
-
-      association_name = key_with_id.chomp("_id")
-      association = object.send(association_name)
-
-      association ? association.full_name : ""
+      content_tag(:footer, content.html_safe) if show_previous_link || show_next_link
     end
   end
 end

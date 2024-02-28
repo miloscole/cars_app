@@ -5,12 +5,12 @@
       <%= render "shared/search" %>
       <%= link_to "Add New", { action: :new }, class: "outline", role: "button" %>
     </header>
-    <% if objects.size > 0 %>
-      <% attribute_fn_name ||= :visible_attributes %>
+    <% if objects.length > 0 %>
+      <% id_column_shown ||= false %>
       <table>
         <thead>
           <tr>
-            <% send(attribute_fn_name, objects.first).keys.each do |key| %>
+            <% object_attributes(objects.first, id_column_shown).keys.each do |key| %>
               <th><%= key.titleize %></th>
             <% end %>
             <th>Actions</th>
@@ -19,16 +19,12 @@
         <tbody>
           <% objects.each do |object| %>
             <tr class="<%= object.class.to_s.downcase %>">
-              <% send(attribute_fn_name, object).each do |key, value| %>
+              <% object_attributes(object, id_column_shown).each do |key, value| %>
                 <td>
                   <% if value.is_a?(String) %>
                     <%= truncate_value(value) %>
                   <% else %>
-                    <% if  key.ends_with?("_id")%>
-                      <%= render_name_instead_of_reference_id(object, key)%>
-                    <% else %>
-                      <%= value %>
-                    <% end %>
+                    <%= value %>
                   <% end %>
                 </td>
               <% end %>
@@ -39,7 +35,7 @@
       </table>
       <%= previous_next_links %>
     <% else %>
-      <h3 class="flex-center page-default-height">You don't have any <%= klass.to_s %> added!</h3>
+      <h3 class="flex-center page-default-height">You don't have any <%= klass.to_s %> to show!</h3>
     <% end %>
   </article>
 </div>

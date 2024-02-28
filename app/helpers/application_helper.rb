@@ -43,10 +43,27 @@ module ApplicationHelper
     end
   end
 
-  def truncate_value(value)
+  def truncate_value(value, num_of_chars = 20)
     return "" unless value.present?
-    return value unless value.length > 20
+    return value unless value.length > num_of_chars
 
-    value.truncate(20)
+    value.truncate(num_of_chars)
+  end
+
+  def search_objects(objects, searchable_fields, klass)
+    objects.where(
+      searchable_fields.map { |field| "#{klass.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
+      query: "%#{params[:query]}%",
+    )
+  end
+
+  def visible_attributes(object, fields_to_remove = [])
+    unless fields_to_remove.is_a?(Array)
+      raise ArgumentError, "fields_to_remove must be array"
+    end
+
+    all_fields = fields_to_remove + ["id", "created_at", "updated_at", "user_id"]
+
+    object.attributes.except(*all_fields)
   end
 end

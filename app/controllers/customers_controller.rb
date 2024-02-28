@@ -3,15 +3,11 @@ class CustomersController < ApplicationController
   include NoticeHelper
   include Shared::IndexHelper
 
-  SEARCHABLE_FIELDS = [:first_name, :last_name, :email]
-
   before_action :set_customer, only: [:edit, :update, :show, :delete, :destroy]
   before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @customers = params[:query].present? ? search_objects(
-      Customer, SEARCHABLE_FIELDS, params[:query]
-    ) : load_index_objects(Customer)
+    @customers = params[:query].present? ? search_customers : load_customers
   end
 
   def new
@@ -74,11 +70,11 @@ class CustomersController < ApplicationController
   end
 
   def set_customer
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(id: params[:id])
   end
 
   def authorize_customer_owner
-    unless @customer.user == Current.user
+    unless @customer&.user == Current.user
       redirect_to root_path, alert: "You are not authorized to access this customer."
     end
   end

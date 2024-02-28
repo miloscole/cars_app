@@ -1,20 +1,17 @@
 class CarsController < ApplicationController
+  include CarsHelper
   include NoticeHelper
   include Shared::IndexHelper
 
-  SEARCHABLE_FIELDS = [:name, :model]
-
-  before_action :set_car, only: [:edit, :update, :show, :delete, :destroy]
-  before_action :authorize_car_owner, only: [:edit, :update, :show, :delete, :destroy]
+  before_action :set_car, only: [:edit, :update, :delete, :destroy]
+  before_action :authorize_car_owner, only: [:edit, :update, :delete, :destroy]
 
   def index
-    @cars = params[:query].present? ?
-      search_objects(Car, SEARCHABLE_FIELDS, params[:query]) : load_index_objects(Car)
+    @cars = params[:query].present? ? search_cars : load_cars
   end
 
   def new
     @car = Car.new
-    @car.build_engine
   end
 
   def create
@@ -39,6 +36,8 @@ class CarsController < ApplicationController
   end
 
   def show
+    @car = load_car_for_show
+    authorize_car_owner
   end
 
   def delete
@@ -53,7 +52,7 @@ class CarsController < ApplicationController
 
   def car_params
     params.require(:car).permit(
-      :name,
+      :brand,
       :model,
       :production_year,
       :price,
@@ -64,11 +63,11 @@ class CarsController < ApplicationController
   end
 
   def set_car
-    @car = Car.find(params[:id])
+    @car = Car.find_by(id: params[:id])
   end
 
   def authorize_car_owner
-    unless @car.user == Current.user
+    unless @car&.user == Current.user
       redirect_to root_path, alert: "You are not authorized to access this car."
     end
   end

@@ -57,7 +57,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
-  #Simple live loader. The page is reloaded fully with window.location.reload().
+  # Simple live loader. The page is reloaded fully with window.location.reload().
   gem "rails_live_reload"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]

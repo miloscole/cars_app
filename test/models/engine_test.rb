@@ -4,7 +4,7 @@ class EngineTest < ActiveSupport::TestCase
   def setup
     @car = cars(:car3)
     @engine = Engine.new(
-      fuel_type: "benzine",
+      fuel_type: "gasoline",
       displacement: 1.6,
       power: 100,
       cylinders_num: 8,

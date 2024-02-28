@@ -1,10 +1,23 @@
 module CustomersHelper
   include ActionView::Helpers::TagHelper
 
-  def customer_visible_attributes(object)
-    customer_hash = {}
-    customer_hash["name"] = object.full_name
-    customer_hash.merge(visible_attributes(object, ["first_name", "last_name"]))
+  FIELDS_FOR_LOAD = [
+    "customers.id",
+    "CONCAT(customers.first_name, ' ', customers.last_name) AS name",
+    "customers.email",
+    "customers.phone",
+    "customers.notes",
+  ]
+
+  SEARCHABLE_FIELDS = [:first_name, :last_name, :email]
+
+  def load_customers
+    load_index_objects(Customer, FIELDS_FOR_LOAD)
+  end
+
+  def search_customers
+    customers = load_customers
+    search_objects(customers, SEARCHABLE_FIELDS, Customer)
   end
 
   def customer_dropdown_option(cus)
