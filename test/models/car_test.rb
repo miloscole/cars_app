@@ -3,7 +3,7 @@ require "test_helper"
 class CarTest < ActiveSupport::TestCase
   def setup
     @car = Car.new(
-      name: "Toyota",
+      brand: "Toyota",
       model: "Camry",
       production_year: "2024-01-01",
       price: 30000,
@@ -15,8 +15,8 @@ class CarTest < ActiveSupport::TestCase
     assert @car.save
   end
 
-  test "should not save car without name" do
-    @car.name = ""
+  test "should not save car without brand" do
+    @car.brand = ""
 
     assert_not @car.save
   end
@@ -39,7 +39,7 @@ class CarTest < ActiveSupport::TestCase
     assert_not @car.save
   end
 
-  test "full_name method should return name + model" do
+  test "full_name method should return brand + model" do
     assert_equal "Toyota Camry", @car.full_name
   end
 end

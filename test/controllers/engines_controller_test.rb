@@ -8,7 +8,7 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
     @engine = engines(:engine2)
     @car_params = {
       car: {
-        name: @car.name,
+        brand: @car.brand,
         model: @car.model,
         production_year: @car.production_year,
         price: @car.price,

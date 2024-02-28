@@ -27,7 +27,7 @@ module Shared
         f.number_field(key, default_options)
       when :dynamic_dropdown
         link = link_to "Add New", new_customer_path, data: { turbo_frame: "add_new_modal" }
-        select = f.select(key, get_all_customers)
+        select = f.select(key, all_customers_for_car)
         link + select
       when :regular_dropdown
         f.select(key, enum_keys(f.object.class, key))
