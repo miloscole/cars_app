@@ -50,10 +50,10 @@ module ApplicationHelper
     value.truncate(num_of_chars)
   end
 
-  def search_objects(objects, searchable_fields, klass)
+  def search_objects(objects, searchable_fields, klass, query)
     objects.where(
       searchable_fields.map { |field| "#{klass.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
-      query: "%#{params[:query]}%",
+      query: "%#{query}%",
     )
   end
 

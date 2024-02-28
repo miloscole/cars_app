@@ -25,15 +25,15 @@ module CarsHelper
     load_index_objects(Car, FIELDS_FOR_LOAD) { |q| q.left_joins(:customer) }
   end
 
-  def search_cars
+  def search_cars(query)
     cars = load_cars
-    search_objects(cars, SEARCHABLE_FIELDS, Car)
+    search_objects(cars, SEARCHABLE_FIELDS, Car, query)
   end
 
-  def load_car_for_show
+  def load_car_for_show(id)
     Car.select(
       "user_id", "brand", "model", "production_year", "price", CONCAT_CUS_NAME
     )
-      .left_joins(:customer).find_by(id: params[:id])
+      .left_joins(:customer).find_by(id: id)
   end
 end

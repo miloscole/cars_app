@@ -7,7 +7,7 @@ class CarsController < ApplicationController
   before_action :authorize_car_owner, only: [:edit, :update, :delete, :destroy]
 
   def index
-    @cars = params[:query].present? ? search_cars : load_cars
+    @cars = params[:query].present? ? search_cars(params[:query]) : load_cars
   end
 
   def new
@@ -36,7 +36,7 @@ class CarsController < ApplicationController
   end
 
   def show
-    @car = load_car_for_show
+    @car = load_car_for_show(params[:id])
     authorize_car_owner
   end
 
