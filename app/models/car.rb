@@ -1,19 +1,40 @@
 class Car < ApplicationRecord
+  include RecordOperations
+
   belongs_to :user
   belongs_to :customer, optional: true
   has_one :engine, dependent: :destroy
   accepts_nested_attributes_for :engine, allow_destroy: true
 
-  validates :brand, presence: true
-  validates :model, presence: true
-  validates :production_year, presence: true
-  validates :price, presence: true
+  validates :brand, :model, :production_year, :price, presence: true
+  validate :customer_belongs_to_current_user
 
-  def full_name
-    self.brand + " " + self.model
+  CONCAT_CUS_NAME = "CONCAT(customers.first_name, ' ', customers.last_name) AS customer"
+  FIELDS_TO_LOAD = %W[cars.id cars.brand cars.model cars.production_year cars.price #{CONCAT_CUS_NAME}]
+  SELECT_FIELDS = %W[user_id brand model production_year price #{CONCAT_CUS_NAME}]
+
+  scope :load_for_show, ->(id) { select(SELECT_FIELDS).left_joins(:customer).find_by(id: id) }
+
+  def self.load_all(page)
+    load_objects(FIELDS_TO_LOAD, page) { |q| q.left_joins(:customer) }
   end
 
-  validate :customer_belongs_to_current_user
+  def self.search(query, page)
+    searchable_fields = [:brand, :model]
+    search_objects(load_all(page), searchable_fields, query)
+  end
+
+  def self.load_customers
+    load_customers = Customer.where(user_id: Current.user.id).select("id, first_name, last_name")
+
+    load_customers.map do |customer|
+      [customer.full_name, customer.id]
+    end.unshift(["Select a customer...", ""])
+  end
+
+  def full_name
+    "#{brand} #{model}"
+  end
 
   private
 

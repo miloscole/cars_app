@@ -2,12 +2,14 @@ require "test_helper"
 
 class CustomerTest < ActiveSupport::TestCase
   def setup
+    Current.user = users(:user1)
     @customer = Customer.new(
       first_name: "Ana",
       last_name: "Anic",
       email: "ana@ana.cc",
-      user_id: 1,
+      user_id: Current.user.id,
     )
+    @params_page = "1"
   end
 
   test "should save valid customer" do
@@ -90,7 +92,32 @@ class CustomerTest < ActiveSupport::TestCase
     assert_not @customer.save
   end
 
-  test "should return full_name as first_name + last_name" do
+  test "full_name method should return first_name + last_name" do
     assert_equal "Ana Anic", @customer.full_name
+  end
+
+  test "load_all method should load customers with specified fields" do
+    loaded_customers = Customer.load_all(@params_page)
+
+    assert_equal loaded_customers.length, Customer.where(user_id: Current.user.id).count
+    assert_equal loaded_customers.first.attributes.length, Customer::FIELDS_TO_LOAD.length
+
+    loaded_customers.each do |customer|
+      assert_includes customer.attributes.keys, "id"
+      assert_includes customer.attributes.keys, "name"
+      assert_includes customer.attributes.keys, "email"
+      assert_includes customer.attributes.keys, "phone"
+      assert_includes customer.attributes.keys, "notes"
+    end
+  end
+
+  test "search method should filter customers based on query" do
+    query = customers(:customer1).email
+
+    filtered_customers = Customer.search(query, @page)
+
+    filtered_customers.each do |customer|
+      assert_includes customer.email.downcase, query.downcase
+    end
   end
 end

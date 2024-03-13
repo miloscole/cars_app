@@ -1,13 +1,11 @@
 class CarsController < ApplicationController
-  include CarsHelper
   include NoticeHelper
-  include Shared::IndexHelper
 
   before_action :set_car, only: [:edit, :update, :delete, :destroy]
   before_action :authorize_car_owner, only: [:edit, :update, :delete, :destroy]
 
   def index
-    @cars = params[:query].present? ? search_cars(params[:query]) : load_cars
+    @cars = params[:query].present? ? Car.search(params[:query], params[:page]) : Car.load_all(params[:page])
   end
 
   def new
@@ -36,7 +34,7 @@ class CarsController < ApplicationController
   end
 
   def show
-    @car = load_car_for_show(params[:id])
+    @car = Car.load_for_show(params[:id])
     authorize_car_owner
   end
 

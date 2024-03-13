@@ -143,24 +143,6 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "Very long value w...", truncate_value(long_value)
   end
 
-  # Tests for search_objects function
-  test "search_objects should filter objects based on query" do
-    query = @cars.first.brand
-    filtered_objects = search_objects(@cars, [:brand, :model], Car, query)
-
-    filtered_objects.each do |object|
-      assert_includes object.brand.downcase, query.downcase
-    end
-  end
-
-  test "search_objects should not show any object with wrong query" do
-    query = "EEEEEEE"
-    filtered_objects = search_objects(@cars, [:brand, :model], Car, query)
-
-    assert_equal filtered_objects.length, 0
-    assert_not_equal @cars.length, filtered_objects.length
-  end
-
   # Tests for visible_attributes function
   test "visible_attributes should return attributes with specified fields removed" do
     visible_attrs = visible_attributes(

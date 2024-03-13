@@ -3,17 +3,13 @@ class User < ApplicationRecord
   has_many :cars, dependent: :destroy
   has_secure_password
 
+  USERNAME_REGEX = /\A[\w]+\z/
+
   validates :email, presence: true, uniqueness: true,
-                    format: {
-                      with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
-                      message: :invalid,
-                    }
+                    format: { with: EMAIL_REGEX, message: :invalid }
   validates :username, presence: true, uniqueness: true,
                        length: { minimum: 3, maximum: 15 },
-                       format: {
-                         with: /\A[\w]+\z/,
-                         message: :invalid,
-                       }
+                       format: { with: USERNAME_REGEX, message: :invalid }
   validates :password, presence: true, length: { minimum: 6 }
 
   before_save :downcase_attributes
@@ -21,7 +17,7 @@ class User < ApplicationRecord
   private
 
   def downcase_attributes
-    self.username = username.downcase
-    self.email = email.downcase
+    username.downcase!
+    email.downcase!
   end
 end
