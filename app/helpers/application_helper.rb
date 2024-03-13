@@ -31,8 +31,8 @@ module ApplicationHelper
   def page_title(model)
     case action_name
     when "index"
-      #"Sending class directly as a model for index case to pick up the name,
-      #since I do not have any instance on the object before geting them all from db."
+      #"Sending the class directly as a model for the index case to retrieve the name,
+      #since I do not have any instances before loading all from db."
       "#{model.to_s.pluralize}"
     when "new", "create"
       "New #{model.class.to_s.downcase}"
@@ -48,13 +48,6 @@ module ApplicationHelper
     return value unless value.length > num_of_chars
 
     value.truncate(num_of_chars)
-  end
-
-  def search_objects(objects, searchable_fields, klass, query)
-    objects.where(
-      searchable_fields.map { |field| "#{klass.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
-      query: "%#{query}%",
-    )
   end
 
   def visible_attributes(object, fields_to_remove = [])

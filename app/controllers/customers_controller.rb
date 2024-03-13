@@ -1,13 +1,13 @@
 class CustomersController < ApplicationController
-  include CustomersHelper
   include NoticeHelper
-  include Shared::IndexHelper
 
   before_action :set_customer, only: [:edit, :update, :show, :delete, :destroy]
   before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @customers = params[:query].present? ? search_customers(params[:query]) : load_customers
+    @customers = params[:query].present? ?
+      Customer.search(params[:query], params[:page]) :
+      Customer.load_all(params[:page])
   end
 
   def new
@@ -24,7 +24,7 @@ class CustomersController < ApplicationController
           if request.headers["Turbo-Frame"]
             render turbo_stream: turbo_stream.append(
               "car_customer_id",
-              html: customer_dropdown_option(@customer),
+              html: helpers.customer_dropdown_option(@customer),
             )
           else
             redirect_to customers_path,

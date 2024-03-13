@@ -30,7 +30,7 @@ module Shared
         # TODO: Add a hash parameter to render_form_field and
         # reconsider how to handle it to avoid breaking logic for shared forms.
         link = link_to "Add New", new_customer_path, data: { turbo_frame: "add_new_modal" }
-        select = f.select(key, all_customers_for_car)
+        select = f.select(key, Car.load_customers)
         link + select
       when :regular_dropdown
         f.select(key, enum_keys(f.object.class, key))
