@@ -11,7 +11,7 @@ module Shared
       "displacement" => :regular_dropdown,
       "power" => :regular_dropdown,
       "cylinders_num" => :regular_dropdown,
-    }.freeze
+    }
 
     def render_form_field(f, key, area_options = {})
       default_options = { placeholder: key.titleize, class: "margin-reset" }

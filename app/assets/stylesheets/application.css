@@ -23,6 +23,10 @@ nav {
     margin: 0 !important;
 }
 
+.full-width {
+    width: 100vw;
+}
+
 .margin-default-right {
     margin-right: 1rem !important;
 }
@@ -30,6 +34,7 @@ nav {
 .margin-left-auto {
     margin-left: auto !important;
 }
+
 .minimal-padding {
     padding: .8rem;
 }
@@ -46,8 +51,12 @@ nav {
     align-items: center;
 }
 
-.page-default-height {
-    height: 90vh;
+.margin-page-reset {
+    margin-top: -5rem;
+}
+
+.default_index_height {
+    height: 62vh;
 }
 
 .notice-msg {
