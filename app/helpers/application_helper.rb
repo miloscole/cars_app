@@ -5,7 +5,7 @@ module ApplicationHelper
                         role: "button"
 
     case current_action
-    when "edit"
+    when "edit", "update"
       show_link = link_to "Show this #{model.class.to_s.downcase}", { action: "show" },
                           class: "outline",
                           role: "button"
@@ -21,7 +21,7 @@ module ApplicationHelper
                             role: "button"
 
       "#{edit_link} #{delete_link} #{back_link}".html_safe
-    when "new", "delete"
+    when "new", "create", "delete"
       back_link
     else
       nil
@@ -31,14 +31,32 @@ module ApplicationHelper
   def page_title(model)
     case action_name
     when "index"
-      #"Strange situation for the index action: model.class will not work as expected (need to check this)."
+      #"Sending the class directly as a model for the index case to retrieve the name,
+      #since I do not have any instances before loading all from db."
       "#{model.to_s.pluralize}"
-    when "new"
+    when "new", "create"
       "New #{model.class.to_s.downcase}"
-    when "edit"
+    when "edit", "update"
       "Editing #{model.class.to_s.downcase}"
     else
       nil
     end
+  end
+
+  def truncate_value(value, num_of_chars = 20)
+    return "" unless value.present?
+    return value unless value.length > num_of_chars
+
+    value.truncate(num_of_chars)
+  end
+
+  def visible_attributes(object, fields_to_remove = [])
+    unless fields_to_remove.is_a?(Array)
+      raise ArgumentError, "fields_to_remove must be array"
+    end
+
+    all_fields = fields_to_remove + ["id", "created_at", "updated_at", "user_id"]
+
+    object.attributes.except(*all_fields)
   end
 end

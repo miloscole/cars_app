@@ -1,14 +1,13 @@
 class CustomersController < ApplicationController
-  include CustomersHelper
   include NoticeHelper
-  include Shared::IndexHelper
 
-  SEARCHABLE_FIELDS = [:first_name, :last_name, :email]
+  before_action :set_customer, only: [:edit, :update, :show, :delete, :destroy]
+  before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
   def index
-    @objects = params[:query].present? ? search_objects(
-      Customer, SEARCHABLE_FIELDS, params[:query]
-    ) : load_index_objects(Customer)
+    @customers = params[:query].present? ?
+      Customer.search(params[:query], params[:page]) :
+      Customer.load_all(params[:page])
   end
 
   def new
@@ -17,6 +16,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
+    @customer.user = Current.user
 
     respond_to do |format|
       if @customer.save
@@ -24,13 +24,17 @@ class CustomersController < ApplicationController
           if request.headers["Turbo-Frame"]
             render turbo_stream: turbo_stream.append(
               "car_customer_id",
-              html: customer_dropdown_option(@customer),
+              html: helpers.customer_dropdown_option(@customer),
             )
           else
-            redirect_to customers_path, notice: notice_msg(@customer, :created)
+            redirect_to customers_path,
+                        notice: notice_msg(@customer, @customer.full_name, :created)
           end
         end
-        format.html { redirect_to customers_path, notice: notice_msg(@customer, :created) }
+        format.html {
+          redirect_to customers_path,
+                      notice: notice_msg(@customer, @customer.full_name, :created)
+        }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -38,36 +42,40 @@ class CustomersController < ApplicationController
   end
 
   def edit
-    @customer = Customer.find(params[:id])
   end
 
   def update
-    @customer = Customer.find(params[:id])
-
     if @customer.update(customer_params)
-      redirect_to customers_path, notice: notice_msg(@customer, :updated)
+      redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :updated)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def show
-    @customer = Customer.find(params[:id])
   end
 
   def delete
-    @customer = Customer.find(params[:id])
   end
 
   def destroy
-    @customer = Customer.find(params[:id])
     @customer.destroy
-    redirect_to customers_path, notice: notice_msg(@customer, :deleted)
+    redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :deleted)
   end
 
   private
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :email, :phone, :notes)
+    params.require(:customer).permit(:first_name, :last_name, :email, :phone, :notes, :user_id)
+  end
+
+  def set_customer
+    @customer = Customer.find_by(id: params[:id])
+  end
+
+  def authorize_customer_owner
+    unless @customer&.user == Current.user
+      redirect_to root_path, alert: "You are not authorized to access this customer."
+    end
   end
 end

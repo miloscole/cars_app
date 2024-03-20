@@ -1,0 +1,30 @@
+<% model ||= nil %>
+<% path ||= nil %>
+<div class="flex-center" data-controller="height">
+  <article>
+    <header>
+      <span class="flex-between">
+        <h3 class="margin-reset margin-default-right"><%= title %></h3>
+        <%= link_to "Back to root",
+          root_path,
+          role: :button,
+          class: "secondary outline" unless defined?(remove_back_btn)
+        %>
+      </span>
+    </header>
+    <div>
+      <%= form_with model: model, url: path do |f| %>
+        <%= yield f %>
+        <br>
+        <div>
+          <%= f.submit submit_title, class: "outline"%>
+        </div>
+      <% end %>
+    </div>
+    <% unless content_for(:footer).blank? %>
+      <footer>
+        <%= yield :footer %>
+      </footer>
+    <% end %>
+  </article>
+</div>

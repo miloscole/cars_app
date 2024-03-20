@@ -2,25 +2,28 @@
 
 car1:
   id: 1
-  name: Mazda
+  brand: Mazda
   model: Premio
   production_year: 2023-12-15
   price: 222
+  user_id: 1
 
 car2:
   id: 2
-  name: Kia
+  brand: Kia
   model: CEED
   production_year: 2023-12-15
   price: 2222
   customer_id: 2
+  user_id: 1
 
 car3:
   id: 3
-  name: Audi
+  brand: Audi
   model: A3
   production_year: 2023-12-15
   price: 2222
+  user_id: 1
 
 
 

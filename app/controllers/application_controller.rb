@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+
   before_action :set_current_user
   before_action :protect_pages
 
@@ -16,12 +18,5 @@ class ApplicationController < ActionController::Base
 
   def protect_pages
     redirect_to new_session_path unless Current.user
-  end
-
-  def search_objects(object, searchable_fields, query)
-    object.where(
-      searchable_fields.map { |field| "#{object.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
-      query: "%#{query}%",
-    )
   end
 end

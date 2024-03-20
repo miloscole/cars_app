@@ -11,7 +11,7 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test "should get new(register)" do
+  test "should get new (register)" do
     get new_user_path
 
     assert_response :success

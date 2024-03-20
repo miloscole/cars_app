@@ -1,0 +1,7 @@
+<%= render "shared/auth/form",
+  title: "Give us your email address!",
+  path: password_reset_path,
+  submit_title: "Reset password" do |f|
+%>
+  <%= render partial: "shared/auth/email_form", locals: { f: f } %>
+<% end %>

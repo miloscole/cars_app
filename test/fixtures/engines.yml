@@ -2,7 +2,7 @@
 
 engine1:
   id: 1
-  fuel_type: benzine
+  fuel_type: gasoline
   displacement: 1.2
   power: 60
   cylinders_num: 8

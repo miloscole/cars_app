@@ -2,8 +2,10 @@ class Authentication::UsersController < ApplicationController
   include NoticeHelper
 
   skip_before_action :protect_pages
+  skip_before_action :set_current_user
 
   def new
+    return redirect_to root_path if session[:user_id]
     @user = User.new
   end
 
@@ -12,7 +14,7 @@ class Authentication::UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: notice_msg(@user, :created)
+      redirect_to root_path, notice: notice_msg(@user, @user.username, :created)
     else
       render :new, status: :unprocessable_entity
     end

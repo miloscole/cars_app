@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_29_094059) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_23_175645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cars", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "brand", null: false
     t.string "model", null: false
     t.date "production_year", null: false
     t.integer "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "customer_id"
+    t.bigint "user_id", null: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -32,10 +33,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_094059) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "engines", force: :cascade do |t|
-    t.bigint "car_id"
+    t.bigint "car_id", null: false
     t.string "fuel_type"
     t.float "displacement"
     t.integer "power"
@@ -56,5 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_094059) do
   end
 
   add_foreign_key "cars", "customers"
+  add_foreign_key "cars", "users"
+  add_foreign_key "customers", "users"
   add_foreign_key "engines", "cars"
 end

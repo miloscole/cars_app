@@ -1,0 +1,4 @@
+<h1><%= "Hello #{params[:user].username}" %></h1>
+<p>
+  Here is your link for password reset <%= link_to "Password reset", password_reset_edit_url(token: @token) %>
+</p>
