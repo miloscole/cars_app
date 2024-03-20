@@ -13,10 +13,12 @@ class Car < ApplicationRecord
   FIELDS_TO_LOAD = %W[cars.id cars.brand cars.model cars.production_year cars.price #{CONCAT_CUS_NAME}]
   SELECT_FIELDS = %W[user_id brand model production_year price #{CONCAT_CUS_NAME}]
 
-  scope :load_for_show, ->(id) { select(SELECT_FIELDS).left_joins(:customer).find_by(id: id) }
-
   def self.load_all(page)
     load_objects(FIELDS_TO_LOAD, page) { |q| q.left_joins(:customer) }
+  end
+
+  def self.load_for_show(id)
+    select(SELECT_FIELDS).left_joins(:customer).find_by(id: id)
   end
 
   def self.search(query, page)
