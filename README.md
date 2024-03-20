@@ -1,6 +1,6 @@
 # CarsApp
 
-This is a simple demonstration application built with Ruby on Rails that covers basic CRUD operations for managing cars and linking them with customers.
+This is a demonstration application built with Ruby on Rails that covers basic CRUD operations for managing cars and linking them with customers.
 
 ## Ruby and Rails versions
 
@@ -65,4 +65,4 @@ Run the test suite using the following command:
 
 ## Helpful link for installing Ruby on Rails on Windows, macOS, and Ubuntu
 
-[link]https://gorails.com/setup/
+[link](https://gorails.com/setup/)

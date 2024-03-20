@@ -6,14 +6,14 @@ module RecordOperations
       objects.where(
         searchable_fields.map { |field| "#{self.arel_table.name}.#{field} LIKE :query" }.join(" OR "),
         query: "%#{query}%",
-      )
+      ).order(created_at: :desc)
     end
 
     def load_objects(fields_for_load, page, &additional_query)
       page ||= 1
       page = page.to_i
 
-      query = self.where(user_id: Current.user.id)
+      query = self.where(user_id: Current.user.id).order(created_at: :desc)
 
       if block_given?
         query = yield(query)

@@ -1,7 +1,9 @@
 class Authentication::SessionsController < ApplicationController
   skip_before_action :protect_pages
+  skip_before_action :set_current_user
 
   def new
+    redirect_to root_path if session[:user_id]
   end
 
   def create
