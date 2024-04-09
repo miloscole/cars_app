@@ -10,7 +10,8 @@ class Car < ApplicationRecord
   validate :customer_belongs_to_current_user
 
   CONCAT_CUS_NAME = "CONCAT(customers.first_name, ' ', customers.last_name) AS customer"
-  FIELDS_TO_LOAD = %W[cars.id cars.brand cars.model cars.production_year cars.price #{CONCAT_CUS_NAME}]
+  CONCAT_PRICE = "CONCAT('$', cars.price) AS sale_price"
+  FIELDS_TO_LOAD = %W[cars.id cars.brand cars.model cars.production_year #{CONCAT_PRICE} #{CONCAT_CUS_NAME}]
   SELECT_FIELDS = %W[user_id brand model production_year price #{CONCAT_CUS_NAME}]
 
   def self.load_all(page)
@@ -31,7 +32,7 @@ class Car < ApplicationRecord
 
     load_customers.map do |customer|
       [customer.full_name, customer.id]
-    end.unshift(["Select a customer...", ""])
+    end
   end
 
   def full_name
