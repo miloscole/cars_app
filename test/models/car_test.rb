@@ -79,7 +79,7 @@ class CarTest < ActiveSupport::TestCase
       assert_includes car.attributes.keys, "brand"
       assert_includes car.attributes.keys, "model"
       assert_includes car.attributes.keys, "production_year"
-      assert_includes car.attributes.keys, "price"
+      assert_includes car.attributes.keys, "sale_price"
       assert_includes car.attributes.keys, "customer"
     end
   end

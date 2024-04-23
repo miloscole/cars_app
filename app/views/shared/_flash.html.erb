@@ -1,8 +1,5 @@
-<span data-controller="flash">
-  <% if notice.present? %>
-    <span class="notice-msg"><%= notice %></span>
-  <% end %>
-  <% if alert.present? %>
-    <span class="alert-msg"><%= alert %></span>
-  <% end %>
-</span>
+<% flash.each do |key, value| %>
+  <span data-controller="flash" class="flash-background-<%= key %> flash-msg">
+    <%= value %>
+  </span>
+<% end %>

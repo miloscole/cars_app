@@ -1,6 +1,4 @@
 class CustomersController < ApplicationController
-  include NoticeHelper
-
   before_action :set_customer, only: [:edit, :update, :show, :delete, :destroy]
   before_action :authorize_customer_owner, only: [:edit, :update, :show, :delete, :destroy]
 
@@ -27,13 +25,13 @@ class CustomersController < ApplicationController
               html: helpers.customer_dropdown_option(@customer),
             )
           else
-            redirect_to customers_path,
-                        notice: notice_msg(@customer, @customer.full_name, :created)
+            success_msg with: @customer.full_name
+            redirect_to customers_path
           end
         end
         format.html {
-          redirect_to customers_path,
-                      notice: notice_msg(@customer, @customer.full_name, :created)
+          success_msg with: @customer.full_name
+          redirect_to customers_path
         }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,7 +44,8 @@ class CustomersController < ApplicationController
 
   def update
     if @customer.update(customer_params)
-      redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :updated)
+      success_msg with: @customer.full_name
+      redirect_to customers_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,7 +59,8 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer.destroy
-    redirect_to customers_path, notice: notice_msg(@customer, @customer.full_name, :deleted)
+    success_msg with: @customer.full_name
+    redirect_to customers_path
   end
 
   private
@@ -75,7 +75,8 @@ class CustomersController < ApplicationController
 
   def authorize_customer_owner
     unless @customer&.user == Current.user
-      redirect_to root_path, alert: "You are not authorized to access this customer."
+      error_msg :not_authorized
+      redirect_to root_path
     end
   end
 end

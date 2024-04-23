@@ -1,0 +1,16 @@
+.flash-msg {
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    position: absolute;
+    right: var(--form-element-spacing-vertical);
+    top: var(--form-element-spacing-horizontal);
+    border-radius: var(--border-radius);
+    z-index: 1;
+}
+
+.flash-background-error {
+    background: var(--del-color);
+}
+
+.flash-background-success {
+    background: var(--primary);
+}

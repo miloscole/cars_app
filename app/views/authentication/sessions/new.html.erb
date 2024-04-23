@@ -10,7 +10,7 @@
   </div>
   <div >
     <%= f.label :password %>
-    <%= f.password_field :password, required: true %>
+    <%= f.password_field :password, required: true, autocomplete: "new-password" %>
   </div>
   <div>
     <%= link_to "Forgot your password?", password_reset_path %>

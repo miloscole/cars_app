@@ -24,8 +24,8 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
       post users_path, params: @user_params
     end
     assert_redirected_to root_path
-    assert_includes flash[:notice], "User"
-    assert_includes flash[:notice], "was successfully created!"
+    assert_includes flash[:success], "Account"
+    assert_includes flash[:success], "was successfully created!"
   end
 
   test "should redirect to new when user params are invalid" do

@@ -11,15 +11,17 @@ class Authentication::SessionsController < ApplicationController
 
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_path, notice: "Successfully logged in"
+      success_msg custom: "Successfully logged in"
+      redirect_to root_path
     else
-      flash[:alert] = "Invalid login!"
+      error_msg_now
       render "new", status: :unprocessable_entity
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to new_session_path, notice: "Successfully logged out"
+    success_msg custom: "You have logged out successfully!"
+    redirect_to new_session_path
   end
 end

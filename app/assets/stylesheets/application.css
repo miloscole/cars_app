@@ -1,3 +1,8 @@
+/*
+ *= require_tree .
+ *= require_self
+*/
+
 html {
     font-size: 16px;
 }
@@ -57,30 +62,6 @@ nav {
 
 .default_index_height {
     height: 62vh;
-}
-
-.notice-msg {
-    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
-    position: absolute;
-    right: var(--form-element-spacing-vertical);
-    top: var(--form-element-spacing-horizontal);
-    background: var(--background-color);
-    color: var(--primary);
-    border: var(--border-width) solid var(--primary);
-    border-radius: var(--border-radius);
-    z-index: 1;
-}
-
-.alert-msg {
-    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
-    position: absolute;
-    right: var(--form-element-spacing-vertical);
-    top: var(--form-element-spacing-horizontal);
-    background: var(--del-color);
-    color: var(--primary-inverse);
-    border: var(--border-width) solid var(--primary-inverse);
-    border-radius: var(--border-radius);
-    z-index: 1;
 }
 
 .index-search {
