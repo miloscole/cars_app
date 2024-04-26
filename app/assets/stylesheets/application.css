@@ -69,6 +69,10 @@ nav {
    grid-template-columns: 70% 30%;
 }
 
+article.small-article {
+    margin-top: -1rem;
+}
+
 /* Hot fix for customer drop down title position */
 label[for="car_customer_id"] {
     margin-bottom: -25px;

@@ -77,3 +77,5 @@ group :test do
   gem "mocha"
   gem "webmock"
 end
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
