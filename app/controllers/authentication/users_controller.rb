@@ -10,6 +10,8 @@ class Authentication::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    @user.country = FetchCountryService.new(request.remote_ip).perform
+
     if @user.save
       session[:user_id] = @user.id
       success_msg for: :account

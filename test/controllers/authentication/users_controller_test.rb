@@ -20,6 +20,10 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
+    stub_request(
+      :get, "http://ip-api.com/json/127.0.0.1"
+    ).to_return(status: 200, body: { status: "fail" }.to_json)
+
     assert_difference("User.count", 1) do
       post users_path, params: @user_params
     end
@@ -28,7 +32,10 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_includes flash[:success], "was successfully created!"
   end
 
-  test "should redirect to new when user params are invalid" do
+  test "should respond with unprocessable_entity when user params are invalid" do
+    stub_request(
+      :get, "http://ip-api.com/json/127.0.0.1"
+    ).to_return(status: 200, body: { status: "fail" }.to_json)
     @user_params[:user][:email] = ""
     post users_path, params: @user_params
 
@@ -36,6 +43,9 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should set session[:user_id] after user creation" do
+    stub_request(
+      :get, "http://ip-api.com/json/127.0.0.1"
+    ).to_return(status: 200, body: { status: "fail" }.to_json)
     post users_path, params: @user_params
 
     assert session[:user_id]
