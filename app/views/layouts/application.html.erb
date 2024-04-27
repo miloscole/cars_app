@@ -13,6 +13,8 @@
     <%= render "shared/flash" %>
     <%= render "shared/nav" if action_name == 'index' %>
     <%= turbo_frame_tag "add_new_modal" %>
-    <%= yield %>
+    <div class="margin-default-right margin-default-left">
+      <%= yield%>
+    </div>
   </body>
 </html>

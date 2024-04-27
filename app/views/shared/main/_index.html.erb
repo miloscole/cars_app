@@ -1,41 +1,43 @@
 <div class="container">
   <article>
-    <header class="flex-between">
+    <header class="flex-between article-table-header-sm">
       <h3 class="margin-reset"><%= page_title(klass) %></h3>
       <%= render "shared/search" %>
       <%= link_to "Add New", { action: :new }, class: "outline", role: "button" %>
     </header>
     <% if objects.length > 0 %>
       <% id_column_shown ||= false %>
-      <table>
-        <thead>
-          <tr>
-            <% object_attributes(objects.first, id_column_shown).keys.each do |key| %>
-              <th><%= key.titleize %></th>
-            <% end %>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% objects.each do |object| %>
-            <tr class="<%= object.class.to_s.downcase %>">
-              <% object_attributes(object, id_column_shown).each do |key, value| %>
-                <td>
-                  <% if value.is_a?(String) %>
-                    <%= truncate_value(value) %>
-                  <% else %>
-                    <%= value %>
-                  <% end %>
-                </td>
+      <div class="overflow-auto-sm">
+        <table>
+          <thead>
+            <tr>
+              <% object_attributes(objects.first, id_column_shown).keys.each do |key| %>
+                <th><%= key.titleize %></th>
               <% end %>
-              <td><%= render "shared/table_dd", id: object.id %></td>
+              <th>Actions</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% objects.each do |object| %>
+              <tr class="<%= object.class.to_s.downcase %>">
+                <% object_attributes(object, id_column_shown).each do |key, value| %>
+                  <td>
+                    <% if value.is_a?(String) %>
+                      <%= truncate_value(value) %>
+                    <% else %>
+                      <%= value %>
+                    <% end %>
+                  </td>
+                <% end %>
+                <td><%= render "shared/table_dd", id: object.id %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
       <%= previous_next_links(klass) %>
     <% else %>
-      <h3 class="flex-center default_index_height">You don't have any <%= klass.to_s %> to show!</h3>
+      <h3 align="center" class="flex-center default_index_height">You don't have any <%= klass.to_s %> to show!</h3>
     <% end %>
   </article>
 </div>
