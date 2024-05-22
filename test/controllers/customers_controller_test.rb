@@ -48,7 +48,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     post customers_path, params: @customer_params
 
     assert_redirected_to customers_path
-    assert_equal flash[:notice], "Customer #{@customer.full_name} was successfully created!"
+    assert_equal flash[:success], "Customer #{@customer.full_name} was successfully created!"
   end
 
   test "should not allow to create a new customer with empty fields" do
@@ -74,7 +74,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     patch customer_path(@customer), params: @customer_params
 
     assert_redirected_to customers_path
-    assert_equal flash[:notice],
+    assert_equal flash[:success],
                  "Customer #{@customer.first_name} #{last_name} was successfully updated!"
   end
 
@@ -98,6 +98,6 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
       delete customer_path(@customer)
     end
     assert_redirected_to customers_path
-    assert_equal flash[:notice], "Customer #{@customer.full_name} was successfully deleted!"
+    assert_equal flash[:success], "Customer #{@customer.full_name} was successfully deleted!"
   end
 end

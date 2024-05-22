@@ -22,7 +22,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
       post password_reset_path, params: { email: @user.email }
     end
     assert_redirected_to new_session_path
-    assert_equal "We sent an email if user with provided email address is found", flash[:notice]
+    assert_equal "We sent an email if user with provided email address is found", flash[:success]
   end
 
   test "should not create password reset with non-existing email" do
@@ -30,7 +30,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
       post password_reset_path, params: { email: "wrong@email.cc" }
     end
     assert_redirected_to new_session_path
-    assert_equal "We sent an email if user with provided email address is found", flash[:notice]
+    assert_equal "We sent an email if user with provided email address is found", flash[:success]
   end
 
   test "should render edit form" do
@@ -47,14 +47,14 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     get password_reset_edit_path(token: invalid_token)
 
     assert_redirected_to new_session_path
-    assert_equal "Token is invalid or has expired. Please try again!", flash[:alert]
+    assert_equal "Token is invalid or has expired. Please try again!", flash[:error]
   end
 
   test "should update password and redirect to new session path" do
     patch password_reset_edit_path(token: @token), params: @user_params
 
     assert_redirected_to new_session_path
-    assert_equal "Password reset successfully! Log in with a new password.", flash[:notice]
+    assert_equal "Password reset successfully! Log in with a new password.", flash[:success]
   end
 
   test "update should fail with invalid params" do
@@ -70,6 +70,6 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     patch password_reset_edit_path(token: invalid_token), params: @user_params
 
     assert_redirected_to new_session_path
-    assert_equal "Token is invalid or has expired. Please try again!", flash[:alert]
+    assert_equal "Token is invalid or has expired. Please try again!", flash[:error]
   end
 end

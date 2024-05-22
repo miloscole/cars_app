@@ -1,6 +1,4 @@
 class Authentication::UsersController < ApplicationController
-  include NoticeHelper
-
   skip_before_action :protect_pages
   skip_before_action :set_current_user
 
@@ -14,7 +12,8 @@ class Authentication::UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: notice_msg(@user, @user.username, :created)
+      success_msg for: :account
+      redirect_to root_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,6 +22,6 @@ class Authentication::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :username, :password)
+    params.require(:user).permit(:email, :username, :password, :password_confirmation)
   end
 end

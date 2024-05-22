@@ -48,7 +48,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     post cars_path, params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.full_name} was successfully created!"
+    assert_equal flash[:success], "Car #{@car.full_name} was successfully created!"
   end
 
   test "should not allow to create a new car with empty fields" do
@@ -73,7 +73,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     patch car_path(@car), params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.brand} #{model} was successfully updated!"
+    assert_equal flash[:success], "Car #{@car.brand} #{model} was successfully updated!"
   end
 
   test "should not allow to update a car with an invalid field" do
@@ -96,6 +96,6 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
       delete car_path(@car)
     end
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.full_name} was successfully deleted!"
+    assert_equal flash[:success], "Car #{@car.full_name} was successfully deleted!"
   end
 end

@@ -13,7 +13,8 @@ class PasswordResetsController < ApplicationController
       #send an email
       ResetPasswordMailer.with(user: @user).reset.deliver_later
     end
-    redirect_to new_session_path, notice: "We sent an email if user with provided email address is found"
+    success_msg custom: "We sent an email if user with provided email address is found"
+    redirect_to new_session_path
   end
 
   def edit
@@ -26,7 +27,8 @@ class PasswordResetsController < ApplicationController
     return invalid_token unless @user
 
     if @user.update(passwords_params)
-      redirect_to new_session_path, notice: "Password reset successfully! Log in with a new password."
+      success_msg custom: "Password reset successfully! Log in with a new password."
+      redirect_to new_session_path
     else
       render "edit", status: :unprocessable_entity
     end
@@ -39,6 +41,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def invalid_token
-    redirect_to new_session_path, alert: "Token is invalid or has expired. Please try again!"
+    error_msg "Token is invalid or has expired. Please try again!"
+    redirect_to new_session_path
   end
 end

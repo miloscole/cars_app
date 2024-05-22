@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include ApplicationHelper
+  include Flashable
 
   before_action :set_current_user
   before_action :protect_pages

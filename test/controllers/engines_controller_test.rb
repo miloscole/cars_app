@@ -58,7 +58,7 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
     patch car_path(@car), params: @car_params
 
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.full_name} was successfully updated!"
+    assert_equal flash[:success], "Car #{@car.full_name} was successfully updated!"
   end
 
   test "should not allow to update an engine" do
@@ -73,6 +73,6 @@ class EnginesControllerTest < ActionDispatch::IntegrationTest
       delete car_path(@car)
     end
     assert_redirected_to cars_path
-    assert_equal flash[:notice], "Car #{@car.full_name} was successfully deleted!"
+    assert_equal flash[:success], "Car #{@car.full_name} was successfully deleted!"
   end
 end

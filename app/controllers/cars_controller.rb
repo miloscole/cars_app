@@ -1,6 +1,4 @@
 class CarsController < ApplicationController
-  include NoticeHelper
-
   before_action :set_car, only: [:edit, :update, :delete, :destroy]
   before_action :authorize_car_owner, only: [:edit, :update, :delete, :destroy]
 
@@ -16,7 +14,8 @@ class CarsController < ApplicationController
     @car = Car.new(car_params)
     @car.user = Current.user
     if @car.save
-      redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :created)
+      success_msg with: @car.full_name
+      redirect_to cars_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +26,8 @@ class CarsController < ApplicationController
 
   def update
     if @car.update(car_params)
-      redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :updated)
+      success_msg with: @car.full_name
+      redirect_to cars_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,8 @@ class CarsController < ApplicationController
 
   def destroy
     @car.destroy
-    redirect_to cars_path, notice: notice_msg(@car, @car.full_name, :deleted)
+    success_msg with: @car.full_name
+    redirect_to cars_path
   end
 
   private
@@ -66,7 +67,8 @@ class CarsController < ApplicationController
 
   def authorize_car_owner
     unless @car&.user == Current.user
-      redirect_to root_path, alert: "You are not authorized to access this car."
+      error_msg :not_authorized
+      redirect_to root_path
     end
   end
 end

@@ -26,7 +26,7 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     post sessions_path, params: @user_params
 
     assert_response :unprocessable_entity
-    assert_equal "Invalid login!", flash[:alert]
+    assert_equal "Something went wrong, please try again", flash[:error]
   end
 
   test "should redirect to new session path with invalid login (username/email)" do
@@ -34,7 +34,7 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
     post sessions_path, params: @user_params
 
     assert_response :unprocessable_entity
-    assert_equal "Invalid login!", flash[:alert]
+    assert_equal "Something went wrong, please try again", flash[:error]
   end
 
   test "should destroy session" do
